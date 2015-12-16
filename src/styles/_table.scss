@@ -1,0 +1,180 @@
+@import "variables";
+@import "palette";
+
+#issue-container table {
+
+  max-width: 800px;
+  min-width: 800px;
+
+  input { outline:none; }
+
+  position: relative;
+  z-index: 100;
+  box-shadow: $elevation-4dp;
+  background: white;
+  margin: 30px auto;
+  color: $colorGrey800;
+  border-collapse: collapse;
+
+  input[type=checkbox] {
+    margin-left: 8px;
+  }
+
+  th {
+    font-weight: normal;
+    cursor: pointer;
+    /* Prevent text selection */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  th:hover {
+    //color: $colorBlueGrey400;
+  }
+  th, td {
+    text-align: left;
+    padding: 15px 8px;
+    border-bottom: 1px solid $colorGrey200;
+  }
+  td {
+    white-space: nowrap;
+    vertical-align: top;
+    font-weight: 300;
+  }
+  tbody tr {
+    transition: all .3s ease;
+  }
+
+  tbody tr:hover {
+    cursor: pointer;
+    background: $colorGrey50;
+    color: $colorGrey800;
+  }
+
+  .title-cell {
+    width: 90%;
+    overflow: hidden;
+    text-overflow-ellipsis: ellipsis;
+  }
+
+  .status-cell {
+    white-space: normal;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .assignee {
+    width: 100%;
+    display: inline-block;
+    padding-top: 4px;
+    text-align: center;
+  }
+
+  .row-selected-true tr, .row-selected-true tr:hover {
+    background: $colorYellow50;
+    td { border-color: $colorYellow100 !important; }
+  }
+
+  .status-resolved, .status-unresolved, .status-new {
+    font-size: 85%;
+    color: white;
+    width:100%;
+    border-radius: 2px;
+    padding: 0 3px;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .status-resolved {
+    background: $colorGreen400;
+  }
+  .status-unresolved {
+    background: $colorRed400;
+  }
+  .status-new {
+    background: $colorBlue400;
+  }
+
+  .no-issues {
+    td {
+      background: $colorGrey50;
+      text-align: center;
+      padding: 40px 10px;
+    }
+    h3 { font-weight: lighter;
+      margin-bottom: 50px;}
+    img {
+      width: 220px;
+      border-radius: 110px;
+      margin: 50px 0;
+    }
+  }
+}
+
+.toolbar-row {
+  background: $colorGrey50;
+  .toolbar-cell {
+    padding: 12px !important;
+    padding-left: 0 !important;
+  }
+  button {
+    font-size: 16px;
+    color: $colorGrey900;
+    background: transparent;
+    border: none;
+    margin-right: 4px;
+    border-radius: 2px;
+    font-weight: 300;
+    cursor: pointer;
+    outline: none;
+  }
+  .selection {
+    font-size: 16px;
+    font-weight: 300;
+    color: $colorGrey600;
+    float: right;
+    padding-top: 7px;
+    padding-right: 10px;
+    display: inline-block;
+  }
+  .search-box {
+    float: right;
+    display: inline;
+    width: 200px;
+  }
+}
+
+.checkbox-cell {
+  width: 50px;
+  //padding-left: 8px !important;
+  //padding-right: 8px !important;
+  text-align: center !important;
+}
+.vote-cell {
+  padding-right: 15px !important;
+}
+
+.footer-visible-false {
+  display: none;
+  transition: all 0.9s ease;
+  opacity: 0;
+}
+
+.footer-visible-true {
+  opacity: 1;
+  display: table-row;
+  background: $colorGrey50;
+
+  td {
+    overflow: scroll;
+    border: none;
+    text-wrap: normal;
+    padding: 20px !important;
+  }
+}
