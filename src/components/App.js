@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 
 import LoginForm from 'components/LoginForm'
 import Header from 'components/Header'
-//import IssueTable from 'components/IssueTable'
+import IssueTable from 'components/IssueTable'
 import IssueForm from 'components/IssueForm'
 import * as FormActionCreators from 'actions/issueFormActions'
 import * as AuthActionCreators from 'actions/authActions'
@@ -23,7 +23,17 @@ class App extends React.Component {
           <Header loggedIn={loggedIn}/>
 
           {!loggedIn ? null : <IssueForm {...issueFormActions} {...issueFormState} />}
-          {loggedIn  ? null : <LoginForm {...loginFormActions} {...loginFormState} />}
+
+          {!loggedIn ? null :
+              <ReactCSSTransitionGroup transitionName="table"
+                                       transitionAppear={true}
+                                       transitionAppearTimeout={500}
+                                       transitionEnterTimeout={500}
+                                       transitionLeaveTimeout={300}>
+                <IssueTable/>
+              </ReactCSSTransitionGroup>}
+
+          {loggedIn ? null : <LoginForm {...loginFormActions} {...loginFormState} />}
 
           {alert ? <div style={{
               bottom: 0,
@@ -55,7 +65,7 @@ function mapDispatchToProps(dispatch) {
   return {
     issueFormActions: bindActionCreators(FormActionCreators, dispatch),
     loginFormActions: bindActionCreators(LoginActionCreators, dispatch),
-    authActions:      bindActionCreators(AuthActionCreators, dispatch)
+    authActions: bindActionCreators(AuthActionCreators, dispatch)
   }
 }
 

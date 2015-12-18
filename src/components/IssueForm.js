@@ -23,7 +23,6 @@ export default class IssueForm extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { submitting, values, errors, resetForm } = this.props
     const hasErrors = errors.description || errors.title
     const strings = {

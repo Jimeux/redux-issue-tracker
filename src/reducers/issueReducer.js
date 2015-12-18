@@ -141,3 +141,29 @@ export default function issues(state = initialState, action) {
     }
   }
 }
+
+export function selectIssues(state) {
+  const { items, filter, query, assignedTo } = state
+
+  if (filter === Filter.UNASSIGNED)
+    items = items.filter(issue => issue.selected || !issue.assignee)
+  else if (filter === Filter.UNRESOLVED)
+    items = items.filter(issue => issue.selected || !issue.resolved)
+  else if (filter === Filter.RESOLVED)
+    items = items.filter(issue => issue.selected || issue.resolved)
+  else if (filter === Filter.NEW)
+    items = items.filter(issue => issue.selected || (!issue.resolved && !issue.assignee))
+
+  if (assignedTo)
+    items = items.filter(issue => issue.selected ||
+    (issue.assignee && issue.assignee._id === assignedTo._id))
+
+  if (query !== null) {
+    query = query.toUpperCase()
+    items = items.filter((i) =>
+    i.title.toUpperCase().includes(query) ||
+    (!i.assignee && Filter.UNASSIGNED.includes(query)) ||
+    (i.assignee && i.assignee.username.toUpperCase().includes(query)))
+  }
+  return items
+}
