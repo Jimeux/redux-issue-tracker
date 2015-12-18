@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-var ClientSchema = new mongoose.Schema({
+const ClientSchema = new mongoose.Schema({
   clientId: {
     type: String,
     unique: true,
@@ -14,20 +14,21 @@ var ClientSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   }
-});
+})
 
+//TODO: Make a client in seed.js
 ClientSchema.statics.verify = function (clientId, clientSecret, done) {
   this.findOne({ clientId: clientId }, (err, client) => {
     if (err)
-      return done(err);
+      return done(err)
     //else if (!client)
-    //  return done(null, false);
+    //  return done(null, false)
     //else if (client.clientSecret != clientSecret)
-    //  return done(null, false);
+    //  return done(null, false)
     //else
-      //return done(null, client);
-    return done(null, {clientId: '1234ljkj1234'});
-  });
-};
+      //return done(null, client)
+    return done(null, {clientId: '1234ljkj1234'})
+  })
+}
 
-module.exports = mongoose.model('Client', ClientSchema);
+module.exports = mongoose.model('Client', ClientSchema)

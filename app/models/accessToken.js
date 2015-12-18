@@ -1,6 +1,6 @@
-const config = require('../config');
-const mongoose = require('mongoose');
-const utils = require("../utils");
+const config = require('../config')
+const mongoose = require('mongoose')
+const utils = require("../utils")
 
 var AccessTokenSchema = new mongoose.Schema({
   token: {
@@ -25,30 +25,30 @@ var AccessTokenSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+})
 
 AccessTokenSchema.statics.createFrom = function (clientId, user, scope, callback) {
-  const accessTokenValue = utils.uid(256);
-  const accessTokenHash = accessTokenValue; //utils.hashToken(accessTokenValue),
+  const accessTokenValue = utils.uid(256)
+  const accessTokenHash = accessTokenValue //utils.hashToken(accessTokenValue),
 
   const accessTokenData = {
     token: accessTokenHash,
     clientId: clientId,
     userId: user._id,
     scope: scope
-  };
+  }
 
   this.create(accessTokenData, (err) => {
     if (err)
-      return callback(err);
+      return callback(err)
     else
       return callback(null, accessTokenValue, null, {
         expires_in: config.get('security:tokenLife'),
         user_id: user._id,
         username: user.username,
         role: user.adminLevel
-      });
-  });
-};
+      })
+  })
+}
 
-module.exports = mongoose.model('AccessToken', AccessTokenSchema, 'tokens');
+module.exports = mongoose.model('AccessToken', AccessTokenSchema, 'tokens')

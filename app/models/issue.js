@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const Material = require('./material');
-const User     = require('./user');
-const util     = require('../utils');
+const mongoose = require('mongoose')
+const User     = require('./user')
+const util     = require('../utils')
 
 const IssueSchema = new mongoose.Schema({
   title: {
@@ -34,11 +33,6 @@ const IssueSchema = new mongoose.Schema({
     default: Date.now,
     required: true
   },
-  material: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Material',
-    required: true
-  },
   creator: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -54,35 +48,34 @@ const IssueSchema = new mongoose.Schema({
     ref: 'User',
     unique: true
   }]
-});
+})
 
 IssueSchema.methods.vote = function (user) {
-  const index = this.votes.indexOf(user._id);
+  const index = this.votes.indexOf(user._id)
 
   if (index >= 0)
-    this.votes.splice(index, 1);
+    this.votes.splice(index, 1)
   else
-    this.votes.push(user._id);
+    this.votes.push(user._id)
 }
 
 IssueSchema.statics.defaultSelectOpts = function () {
   return [
     {path: 'creator', select: '_id username'},
-    {path: 'assignee', select: '_id username'},
-    {path: 'material', select: '_id title type level index'}
-  ];
+    {path: 'assignee', select: '_id username'}
+  ]
 }
 
 IssueSchema.statics.jsonFormat = function (issue, user) {
-  issue = issue.toJSON();
-  issue.showDetails = false;
-  issue.voted = issue.votes.indexOf(user._id) >= 0;
-  issue.voteCount = issue.votes.length;
-  issue.creatorName = util.capitalise(issue.creator.username);
-  issue.assigneeName = issue.assignee ? util.capitalise(issue.assignee.username) : 'Unassigned';
-  const m = issue.material;
-  issue.materialString = `Lv${m.level} ${m.type} ${m.index}`;
-  return issue;
+  issue = issue.toJSON()
+  issue.showDetails = false
+  issue.voted = issue.votes.indexOf(user._id) >= 0
+  issue.voteCount = issue.votes.length
+  issue.creatorName = util.capitalise(issue.creator.username)
+  issue.assigneeName = issue.assignee ? util.capitalise(issue.assignee.username) : 'Unassigned'
+  const m = issue.material
+  issue.materialString = `Lv${m.level} ${m.type} ${m.index}`
+  return issue
 }
 
-module.exports = mongoose.model('Issue', IssueSchema, 'issues');
+module.exports = mongoose.model('Issue', IssueSchema, 'issues')

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const bcrypt   = require('bcrypt-nodejs');
-const util     = require('../utils');
+const mongoose = require('mongoose')
+const bcrypt   = require('bcrypt-nodejs')
+const util     = require('../utils')
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -18,28 +18,28 @@ const UserSchema = new mongoose.Schema({
     default  : 1,
     enum     : [0, 1, 2]
   }
-});
+})
 
 /**
  *  Encrypt user's password if modified.
  *  Executed before each user.save() call.
  */
 UserSchema.pre('save', function(callback) {
-  var user = this;
+  var user = this
 
-  if (!user.isModified('password')) return callback();
+  if (!user.isModified('password')) return callback()
 
   bcrypt.genSalt(5, function(err, salt) {
-    if (err) return callback(err);
+    if (err) return callback(err)
 
     bcrypt.hash(user.password, salt, null, function(err, hash) {
-      if (err) return callback(err);
-      user.password = hash;
-      callback();
-    });
+      if (err) return callback(err)
+      user.password = hash
+      callback()
+    })
 
-  });
-});
+  })
+})
 
 /**
  * Check plain text password against encrypted version
@@ -48,11 +48,11 @@ UserSchema.pre('save', function(callback) {
 UserSchema.methods.verifyPassword = function(password, cb) {
   bcrypt.compare(password, this.password, function(err, isMatch) {
     if (err)
-      return cb(err);
+      return cb(err)
     else
-      cb(null, isMatch);
-  });
-};
+      cb(null, isMatch)
+  })
+}
 
 UserSchema.statics.roles = function() {
   return {
@@ -69,4 +69,4 @@ UserSchema.statics.jsonFormat = function (user) {
   }
 }
 
-module.exports = mongoose.model('User', UserSchema, 'users');
+module.exports = mongoose.model('User', UserSchema, 'users')

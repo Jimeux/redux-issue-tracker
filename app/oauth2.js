@@ -1,14 +1,14 @@
 // Libraries
-const config      = require('./config');
-const utils       = require('./utils');
-const oauth2orize = require('oauth2orize');
-const passport    = require('passport');
-const server      = oauth2orize.createServer();
+const config      = require('./config')
+const utils       = require('./utils')
+const oauth2orize = require('oauth2orize')
+const passport    = require('passport')
+const server      = oauth2orize.createServer()
 
 // Models
-const User         = require('./models/user');
-const Client       = require('./models/client');
-const AccessToken  = require('./models/accessToken');
+const User         = require('./models/user')
+const Client       = require('./models/client')
+const AccessToken  = require('./models/accessToken')
 
 /**
  * Implements the Resource Owner Password Credentials Grant flow
@@ -30,28 +30,28 @@ const AccessToken  = require('./models/accessToken');
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
   User.findOne({username: username}, (err, user) => {
     if (err)
-      return done(err);
+      return done(err)
     if (!user)
-      return done(null, false);
+      return done(null, false)
 
     user.verifyPassword(password, (err, isMatch) => {
       if (err)
-        return done(err);
+        return done(err)
       if (!isMatch)
-        return done(null, false);
+        return done(null, false)
 
       AccessToken.remove({
         userId: user._id,
         clientId: client.clientId
       }, (err) => {
         if (err)
-          return done(err);
-      });
+          return done(err)
+      })
 
-      AccessToken.createFrom(client.clientId, user, scope, done);
-    });
-  });
-}));
+      AccessToken.createFrom(client.clientId, user, scope, done)
+    })
+  })
+}))
 
 /**
  * Specify the passport strategies to use to authenticate Clients.
@@ -61,4 +61,4 @@ exports.token = [
   passport.authenticate(['oauth2-client-password'], { session: false }),
   server.token(),
   server.errorHandler()
-];
+]
