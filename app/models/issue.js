@@ -73,8 +73,6 @@ IssueSchema.statics.jsonFormat = function (issue, user) {
   issue.voteCount = issue.votes.length
   issue.creatorName = util.capitalise(issue.creator.username)
   issue.assigneeName = issue.assignee ? util.capitalise(issue.assignee.username) : 'Unassigned'
-  const m = issue.material
-  issue.materialString = `Lv${m.level} ${m.type} ${m.index}`
   return issue
 }
 

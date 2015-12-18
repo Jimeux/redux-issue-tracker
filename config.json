@@ -4,6 +4,6 @@
     "tokenLife" : 30000
   },
   "mongoose": {
-    "uri": "mongodb://localhost:27017/material_tracker"
+    "uri": "mongodb://localhost:27017/issue_tracker"
   }
 }

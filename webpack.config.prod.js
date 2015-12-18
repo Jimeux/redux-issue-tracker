@@ -6,11 +6,17 @@ module.exports = {
   entry: [
     './src/index'
   ],
+
+  resolve: {
+    modulesDirectories: ['src', 'node_modules']
+  },
+
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },
+
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
@@ -24,10 +30,11 @@ module.exports = {
       }
     })
   ],
+
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ['babel'],
         include: path.join(__dirname, 'src')
       },

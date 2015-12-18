@@ -11,6 +11,10 @@ module.exports = {
     './src/index'
   ],
 
+  resolve: {
+    modulesDirectories: ['src', 'node_modules']
+  },
+
   output: {
     path: '/',
     publicPath: 'http://localhost:3000/public/',
