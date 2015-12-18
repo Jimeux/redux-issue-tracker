@@ -5,26 +5,23 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const config = require('./config')
 
-// Auth
+/* Auth */
 const passport = require('passport')
 const auth = require('./app/auth')
 const oauth2 = require('./app/oauth2')
 
-/** Controllers */
+/* Controllers */
 const issues = require('./app/controllers/issues')
-const materials = require('./app/controllers/materials')
 const sessions = require('./app/controllers/sessions')
 const users = require('./app/controllers/users')
 
-const User = require('./app/models/user')
-
 const app = express()
 
-/** DB setup */
+/* DB setup */
 const mongoose = require('mongoose')
 mongoose.connect(config.mongoose.uri)
 
-
+/* Webpack dev proxy */
 if (app.get('env') === 'development') {
 // Step 1: Create & configure a webpack compiler
   var webpack = require('webpack')
@@ -48,7 +45,7 @@ if (app.get('env') === 'development') {
 
 
 
-/** View engine setup */
+/* View engine setup */
 app.set('view engine', 'jade')
 app.set('views', path.join(__dirname, 'app/views'))
 
@@ -57,19 +54,18 @@ app.set('views', path.join(__dirname, 'app/views'))
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
-app.use(express.static(path.join(__dirname, 'public')))
+app.use('/public', express.static(__dirname + '/public'));
 
 app.use(passport.initialize())
 app.use(passport.session())
 
-/** Set up routes */
+/* Set up routes */
 app.get('/', (req, res) => {
   res.render('index')
 })
 app.use('/issues', issues)
 app.use('/users', users)
 app.use('/sessions', sessions)
-app.use('/materials', materials)
 app.post('/oauth/token', oauth2.token)
 
 // catch 404 and forward to error handler

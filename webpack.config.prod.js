@@ -1,5 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   devtool: 'source-map',
@@ -7,7 +7,7 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },
@@ -25,10 +25,17 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'src')
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['babel'],
+        include: path.join(__dirname, 'src')
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'sass'],
+        include: path.join(__dirname, 'src')
+      }
+    ]
   }
-};
+}
