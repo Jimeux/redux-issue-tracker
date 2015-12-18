@@ -1,0 +1,9 @@
+{
+  "port" : 1337,
+  "security": {
+    "tokenLife" : 30000
+  },
+  "mongoose": {
+    "uri": "mongodb://localhost:27017/material_tracker"
+  }
+}
