@@ -1,3 +1,5 @@
+'use strict'
+
 const mongoose = require('mongoose')
 const User = require('./models/user')
 const Issue = require('./models/issue')
@@ -7,7 +9,7 @@ mongoose.connect(config.mongoose.uri)
 
 const users = [
   {
-    username: 'anthony',
+    username: 'james',
     password: 'passer',
     adminLevel: 2
   },
@@ -34,7 +36,7 @@ const issues = [
 
 //User.remove({}, () => {})
 //Issue.remove({}, () => {})
-//createUsers()
+createUsers()
 //createIssues()
 
 function createUsers() {

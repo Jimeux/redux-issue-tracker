@@ -24,20 +24,3 @@ export function fetchEditors() {
 export function receiveEditors(editors) {
   return {type: RECEIVE_EDITORS, editors}
 }
-
-export function login(formData) {
-  return dispatch => {
-    const body = Rest.passwordGrant(formData.username, formData.password)
-    const options = Rest.getOptions('POST', body)
-
-    fetch('/oauth/token', options)
-        .then(response => response.json())
-        .then(json => {
-          console.log(json);
-          dispatch({
-            type: SAVE_DETAILS,
-            hash: json
-          });
-        })
-  }
-}

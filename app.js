@@ -43,8 +43,6 @@ if (app.get('env') === 'development') {
   }))
 }
 
-
-
 /* View engine setup */
 app.set('view engine', 'jade')
 app.set('views', path.join(__dirname, 'app/views'))
@@ -54,7 +52,7 @@ app.set('views', path.join(__dirname, 'app/views'))
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
-app.use('/public', express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public'))
 
 app.use(passport.initialize())
 app.use(passport.session())

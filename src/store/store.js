@@ -5,10 +5,12 @@ import createLogger from 'redux-logger'
 import issues from 'reducers/issueReducer'
 import filters from 'reducers/filterReducer'
 import auth from 'reducers/authReducer'
-import form from 'reducers/formReducer'
+import issueForm from 'reducers/issueFormReducer'
+import loginForm from 'reducers/loginFormReducer'
+import alert from 'reducers/alertReducer'
 
 const rootReducer = combineReducers({
-  filters, issues, auth, form
+  filters, issues, auth, issueForm, loginForm, alert
 })
 
 const createStoreWithMiddleware = applyMiddleware(

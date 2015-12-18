@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import Rest from 'helpers/rest'
-import { SUBMIT_FORM, SUBMISSION_COMPLETED } from 'actions/formActions'
+import { SUBMIT_FORM, SUBMISSION_COMPLETED } from 'actions/issueFormActions'
 
 export const ADD_ISSUE = 'ADD_ISSUE'
 export const ADD_ISSUE_ERROR = 'ADD_ISSUE_ERROR'
