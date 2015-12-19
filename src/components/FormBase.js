@@ -18,7 +18,8 @@ export default class FormBase extends React.Component {
     this.updateValue(field, true)
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault()
     const formData = {}
     Object.keys(this.refs).forEach((field) => {
       formData[field] = this.refs[field].value

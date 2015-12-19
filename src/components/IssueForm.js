@@ -1,36 +1,7 @@
 import React from 'react'
+import FormBase from 'components/FormBase'
 
-export default class IssueForm extends React.Component {
-
-  handleSubmit() {
-    const { title, description } = this.refs
-    const formData = {
-      title: title.value,
-      description: description.value
-    }
-    const errors = Validators.validateAll(formData)
-
-    if (errors.hasErrors)
-      this.props.updateErrors(errors)
-    else
-      this.props.submitForm(formData)
-  }
-
-  updateValue(field, check) {
-    const value = this.refs[field].value
-    let error = this.props.errors[field]
-    if (error || check)
-      error = Validators[field](value)
-    this.props.updateValue(field, value, error)
-  }
-
-  handleChange(field) {
-    this.updateValue(field, false)
-  }
-
-  handleBlur(field) {
-    this.updateValue(field, true)
-  }
+export default class IssueForm extends FormBase {
 
   render() {
     const { submitting, values, errors, resetForm } = this.props
@@ -42,7 +13,11 @@ export default class IssueForm extends React.Component {
     }
 
     return (
-        <div className="modal fade" id="modal-issue" tabIndex="-1" role="dialog" aria-labelledby="modalIssueLabel">
+        <div className="modal fade"
+             id="modal-issue"
+             tabIndex="-1"
+             role="dialog"
+             aria-labelledby="modalIssueLabel">
           <div className="issue-modal modal-dialog" role="document">
             <div className="modal-content">
 
@@ -65,6 +40,7 @@ export default class IssueForm extends React.Component {
                     Title
                     <span className="error">{errors.title}</span>
                   </label>
+
                   <input value={values.title}
                          onBlur={() => this.handleBlur('title')}
                          onChange={() => this.handleChange('title')}
@@ -79,6 +55,7 @@ export default class IssueForm extends React.Component {
                     Description
                     <span className="error">{errors.description}</span>
                   </label>
+
                   <textarea value={values.description}
                             onBlur={() => this.handleBlur('description')}
                             onChange={() => this.handleChange('description')}
@@ -97,10 +74,11 @@ export default class IssueForm extends React.Component {
                         disabled={submitting}>
                   Close
                 </button>
+
                 <button ref="submit"
-                        onClick={()=> this.handleSubmit()}
+                        onClick={(e) => this.handleSubmit(e)}
                         disabled={submitting || hasErrors}
-                        type="button"
+                        type="submit"
                         className="btn btn-primary">
                   {strings.submitValue}
                 </button>
@@ -112,7 +90,7 @@ export default class IssueForm extends React.Component {
   }
 }
 
-class Validators {
+IssueForm.prototype.Validators = class {
   static title(value) {
     if (!value)
       return 'is required'

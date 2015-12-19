@@ -20,6 +20,7 @@ export default class LoginForm extends FormBase {
               Username
               <span className="error">{errors.username}</span>
             </label>
+
             <input value={values.username}
                    onBlur={() => this.handleBlur('username')}
                    onChange={() => this.handleChange('username')}
@@ -34,6 +35,7 @@ export default class LoginForm extends FormBase {
               Password
               <span className="error">{errors.password}</span>
             </label>
+
             <input value={values.password}
                    onBlur={() => this.handleBlur('password')}
                    onChange={() => this.handleChange('password')}
@@ -43,9 +45,8 @@ export default class LoginForm extends FormBase {
                    placeholder="Password"/>
           </div>
 
-          <button onClick={() => this.handleSubmit()}
-                  className="btn btn-primary btn-block"
-                  type="button"
+          <button className="btn btn-primary btn-block"
+                  type="submit"
                   disabled={hasErrors || submitting}>
             {strings.submitValue}
           </button>
