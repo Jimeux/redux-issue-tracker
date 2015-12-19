@@ -1,7 +1,7 @@
 import { SAVE_DETAILS, RECEIVE_EDITORS } from 'actions/authActions'
 
 export default function auth(state = {
-  id: null,
+  userId: null,
   username: null,
   token: null,
   role: 1,
@@ -14,7 +14,7 @@ export default function auth(state = {
     case SAVE_DETAILS:
       const { user_id, username, access_token, role } = action.hash
       return {
-        id: user_id,
+        userId: user_id,
         editors: state.editors,
         username,
         token: access_token,

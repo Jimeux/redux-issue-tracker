@@ -143,7 +143,7 @@ export default function issues(state = initialState, action) {
 }
 
 export function selectIssues(state) {
-  const { items, filter, query, assignedTo } = state
+  let { items, filter, query, assignedTo } = state
 
   if (filter === Filter.UNASSIGNED)
     items = items.filter(issue => issue.selected || !issue.assignee)
@@ -160,10 +160,11 @@ export function selectIssues(state) {
 
   if (query !== null) {
     query = query.toUpperCase()
-    items = items.filter((i) =>
-    i.title.toUpperCase().includes(query) ||
-    (!i.assignee && Filter.UNASSIGNED.includes(query)) ||
-    (i.assignee && i.assignee.username.toUpperCase().includes(query)))
+    items = items.filter((i) => {
+      return i.title.toUpperCase().includes(query) ||
+          (!i.assignee && Filter.UNASSIGNED.includes(query)) ||
+          (i.assignee && i.assignee.username.toUpperCase().includes(query))
+    })
   }
   return items
 }

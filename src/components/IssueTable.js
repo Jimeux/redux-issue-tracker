@@ -25,27 +25,17 @@ export default class IssueTable extends React.Component {
     return (
         <table className="issue-table">
           <IssueHeader {...issueActions} {...issueState} {...authState} />
-          <EmptyBody isEmpty={items.length <= 0}/>
+          {items.length > 0 ? null :
+              <tbody>
+              <tr className="no-issues">
+                <td colSpan={5}>
+                  <h3>No issues found...</h3>
+                </td>
+              </tr>
+              </tbody>}
           {rows}
         </table>
     )
-  }
-}
-
-export class EmptyBody extends React.Component {
-  render() {
-    if (this.props.isEmpty) {
-      return (
-          <tbody>
-          <tr className="no-issues">
-            <td colSpan={5}>
-              <img src="images/no_issues.jpg"/>
-              <h3>No issues found...</h3>
-            </td>
-          </tr>
-          </tbody>
-      )
-    }
   }
 }
 

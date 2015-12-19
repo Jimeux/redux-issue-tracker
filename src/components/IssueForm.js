@@ -16,10 +16,20 @@ export default class IssueForm extends React.Component {
       this.props.submitForm(formData)
   }
 
-  handleBlur(field) {
+  updateValue(field, check) {
     const value = this.refs[field].value
-    const error = Validators[field](this.refs[field].value)
+    let error = this.props.errors[field]
+    if (error || check)
+      error = Validators[field](value)
     this.props.updateValue(field, value, error)
+  }
+
+  handleChange(field) {
+    this.updateValue(field, false)
+  }
+
+  handleBlur(field) {
+    this.updateValue(field, true)
   }
 
   render() {
@@ -56,7 +66,8 @@ export default class IssueForm extends React.Component {
                     <span className="error">{errors.title}</span>
                   </label>
                   <input value={values.title}
-                         onChange={() => this.handleBlur('title')}
+                         onBlur={() => this.handleBlur('title')}
+                         onChange={() => this.handleChange('title')}
                          type="text"
                          className="form-control"
                          ref="title"
@@ -69,7 +80,8 @@ export default class IssueForm extends React.Component {
                     <span className="error">{errors.description}</span>
                   </label>
                   <textarea value={values.description}
-                            onChange={() => this.handleBlur('description')}
+                            onBlur={() => this.handleBlur('description')}
+                            onChange={() => this.handleChange('description')}
                             ref="description"
                             rows={4}
                             className="form-control"

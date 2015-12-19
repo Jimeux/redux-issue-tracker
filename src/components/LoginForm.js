@@ -1,26 +1,7 @@
 import React from 'react'
+import FormBase from 'components/FormBase'
 
-export default class LoginForm extends React.Component {
-
-  handleSubmit() {
-    const { username, password } = this.refs
-    const formData = {
-      username: username.value,
-      password: password.value
-    }
-    const errors = Validators.validateAll(formData)
-
-    if (errors.hasErrors)
-      this.props.updateErrors(errors)
-    else
-      this.props.submitLoginForm(formData)
-  }
-
-  handleBlur(field) {
-    const value = this.refs[field].value
-    const error = Validators[field](this.refs[field].value)
-    this.props.updateValue(field, value, error)
-  }
+export default class LoginForm extends FormBase {
 
   render() {
     const { submitting, values, errors } = this.props
@@ -40,7 +21,8 @@ export default class LoginForm extends React.Component {
               <span className="error">{errors.username}</span>
             </label>
             <input value={values.username}
-                   onChange={() => this.handleBlur('username')}
+                   onBlur={() => this.handleBlur('username')}
+                   onChange={() => this.handleChange('username')}
                    type="text"
                    className="form-control"
                    ref="username"
@@ -53,7 +35,8 @@ export default class LoginForm extends React.Component {
               <span className="error">{errors.password}</span>
             </label>
             <input value={values.password}
-                   onChange={() => this.handleBlur('password')}
+                   onBlur={() => this.handleBlur('password')}
+                   onChange={() => this.handleChange('password')}
                    type="password"
                    className="form-control"
                    ref="password"
@@ -72,7 +55,7 @@ export default class LoginForm extends React.Component {
   }
 }
 
-class Validators {
+LoginForm.prototype.Validators = class {
   static username(value) {
     if (!value)
       return 'is required'

@@ -21,7 +21,7 @@ export function resetForm() {
   return { type: RESET_LOGIN_FORM }
 }
 
-export function submitLoginForm(formData) {
+export function submitForm(formData) {
   return (dispatch) => {
 
     dispatch({ type: SUBMIT_LOGIN_FORM })
