@@ -47,10 +47,11 @@ body {
 #login-form {
   @extend .card;
 
+  z-index: 400;
   text-align: left;
 
   margin: 20% auto;
-  z-index: 400;
+  z-index: 100;
 
   width: 350px;
   padding: 20px;

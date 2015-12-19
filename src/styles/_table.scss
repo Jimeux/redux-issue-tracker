@@ -3,8 +3,8 @@
 
 #issue-container table {
 
-  max-width: 800px;
-  min-width: 800px;
+  max-width: 730px;
+  min-width: 730px;
 
   input { outline:none; }
 
@@ -36,7 +36,7 @@
   }
   th, td {
     text-align: left;
-    padding: 15px 8px;
+    padding: 15px 12px;
     border-bottom: 1px solid $colorGrey200;
   }
   td {
@@ -67,6 +67,10 @@
   .title {
     font-size: 16px;
     font-weight: 400;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .assignee {
