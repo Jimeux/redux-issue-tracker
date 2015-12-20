@@ -22,7 +22,6 @@ export const Order = {
   TITLE: 'title',
   ASSIGNEE: 'assigneeName',
   STATUS: 'resolved',
-  PRIORITY: 'priority',
   VOTES: 'voteCount'
 }
 
@@ -54,16 +53,6 @@ export function fetchIssues() {
           dispatch({type: RECEIVE_ISSUES, issues: json.issues}))
   }
 }
-
-/*export function patchIssue(issue, field, value) {
-  return (dispatch, getState) => {
-    const token = getState().auth.token
-
-    fetch(`/issues/${issue}`, Rest.getOptions('PATCH', {field, value}, token))
-        .then(response => response.json()) //TODO: errors
-        .then(issue => dispatch(updateIssue(issue)))
-  }
-}*/
 
 export function updateIssues(issues, field, value, update) {
   return (dispatch, getState) => {

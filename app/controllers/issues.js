@@ -83,9 +83,6 @@ function batchUpdate(req, res) {
   if (field === 'assignee') {
     type = Activity.Types.ASSIGNED_TO
     taggedUser = value
-  } else if (field === 'priority') {
-    type = Activity.Types.MARKED_AS
-    content = value
   } else if (field === 'resolved') {
     type = Activity.Types.CHANGED_STATUS
     content = value ? 'resolved' : 'unresolved'

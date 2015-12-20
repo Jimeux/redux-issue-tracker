@@ -8,14 +8,12 @@ export default class IssueHeader extends React.Component {
     const {items, updateIssues, filter, query, assignedTo, editors } = this.props // state
     const { selectAll, search, sort, setFilter, setAssigned } = this.props //actions
 
-    const priorities = ['Low', 'Medium', 'High', 'Urgent']
     const selectedCount = items.filter(f => f.selected).length
     const noneSelected = selectedCount <= 0
     const allSelected = items.length === selectedCount
     const allChecked = !noneSelected && allSelected
 
     const markAs = (value) => updateIssues(items, 'resolved', value, value)
-    const setPriority = (priority) => updateIssues(items, 'priority', priority, priority)
     const assignTo = (id, editor) => updateIssues(items, 'assignee', id, editor)
 
     return (
@@ -36,14 +34,10 @@ export default class IssueHeader extends React.Component {
               ]}/>}
 
             {noneSelected ? null :
-                <ActiveMenu id="assignee-menu" title="Assignee" values={[
+                <ActiveMenu id="assignee-menu" title="Assign To" values={[
                   [() => assignTo(null, null), 'Unassign'],
                   ...editors.map((e) => [() => assignTo(e._id, e), e.username])
               ]}/>}
-
-            {noneSelected ? null :
-                <ActiveMenu id="priority-menu" title="Priority" values={
-                  priorities.map((p) => [() => setPriority(p), p])}/>}
 
             {noneSelected ? null :
                 <span className="selection">{`${selectedCount} selected `}</span>}
@@ -60,7 +54,7 @@ export default class IssueHeader extends React.Component {
               ]}/>}
 
             {!noneSelected ? null :
-                <ActiveMenu id="assigned-menu" title={assignedTo.username || 'Assigned'} values={[
+                <ActiveMenu id="assigned-menu" title={assignedTo.username || 'Assigned To'} values={[
                   [() => setAssigned(''), 'Everyone'],
                   ...editors.map((e) => [() => setAssigned(e), e.username])
               ]}/>}
@@ -70,7 +64,6 @@ export default class IssueHeader extends React.Component {
                   [() => sort(Order.DATE), 'Created'],
                   [() => sort(Order.TITLE), 'Title'],
                   [() => sort(Order.ASSIGNEE), 'Assignee'],
-                  [() => sort(Order.PRIORITY), 'Priority'],
                   [() => sort(Order.STATUS), 'Status'],
                   [() => sort(Order.VOTES), 'Votes']
               ]}/>}

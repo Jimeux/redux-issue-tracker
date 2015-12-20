@@ -62,15 +62,17 @@ header {
     color: $colorBlue50;
     padding: 20px 0;
     border-bottom: 1px solid $colorBlue300;
-    margin: 10px 25px;
+    margin: 15px 25px;
     display: block;
   }
   .body {
     ul {
       list-style: none;
       padding: 0;
+      color: $colorBlue50;
     }
     li {
+      color: $colorBlue50;
       padding: 18px 30px;
       font-size: 16px;
       font-weight: 300;
@@ -80,6 +82,7 @@ header {
     }
     li:hover {
       background: $colorBlue300;
+      color: white;
     }
   }
 }

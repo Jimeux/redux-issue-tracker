@@ -8,12 +8,6 @@ const IssueSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  priority: {
-    type: String,
-    default: 'Medium',
-    enum: ['Urgent', 'High', 'Medium', 'Low'],
-    required: true
-  },
   category: {
     type: String,
     default: 'General',
