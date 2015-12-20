@@ -77,7 +77,7 @@ export default class IssueForm extends FormBase {
 
                 <button ref="submit"
                         onClick={(e) => this.handleSubmit(e)}
-                        disabled={submitting || hasErrors}
+
                         type="submit"
                         className="btn btn-primary">
                   {strings.submitValue}
@@ -89,6 +89,8 @@ export default class IssueForm extends FormBase {
     )
   }
 }
+
+//disabled={submitting || hasErrors}
 
 IssueForm.prototype.Validators = class {
   static title(value) {

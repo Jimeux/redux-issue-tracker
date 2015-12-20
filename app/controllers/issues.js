@@ -1,6 +1,9 @@
+'use strict'
+
 const express = require('express')
 const passport = require('passport')
 const Issue = require('../models/issue')
+const Activity = require('../models/activity')
 const User = require('../models/user')
 const router = express.Router()
 
@@ -19,6 +22,7 @@ router.route('/:id/plusone')
     .post(plusOne)
 
 function index(req, res) {
+
   Issue.find({})
       .populate(Issue.defaultSelectOpts())
       .sort('-createdAt')
@@ -27,7 +31,7 @@ function index(req, res) {
           res.sendStatus(500)
         else {
           issues = issues.map((i) => Issue.jsonFormat(i, req.user))
-          res.json({issues: issues})
+          res.json({issues})
         }
       })
 }
@@ -36,8 +40,13 @@ function create(req, res) {
   const issue = new Issue({
     //category: 'General',
     title: req.body.title,
-    description: req.body.description,
     creator: req.user
+  })
+
+  issue.activities.push({
+    user: req.user,
+    content: req.body.description,
+    type: Activity.Types.CREATED
   })
 
   saveIssue(res, issue, req.user, (err) => {
@@ -60,16 +69,49 @@ function update(req, res) {
 
 function batchUpdate(req, res) {
   const ids = req.body.issues
+  const field = req.body.field
+  const value = req.body.value
+  const user = req.user
+
   const update = {}
-  update[req.body.field] = req.body.value
+  update[field] = value
+
+  let type = null
+  let content = null
+  let taggedUser = null
+
+  if (field === 'assignee') {
+    type = Activity.Types.ASSIGNED_TO
+    taggedUser = value
+  } else if (field === 'priority') {
+    type = Activity.Types.MARKED_AS
+    content = value
+  } else if (field === 'resolved') {
+    type = Activity.Types.CHANGED_STATUS
+    content = value ? 'resolved' : 'unresolved'
+  }
+
+  const activity = {user, content, type, taggedUser}
 
   Issue.where({'_id': {$in: ids}})
-      .setOptions({ multi: true })
-      .update({ $set: update }, (err, count) => {
-        if (err)
+      .setOptions({multi: true})
+      .update({$set: update, $push: {'activities': activity}}, (err, count) => {
+        if (err) {
+          console.log(err)
           res.sendStatus(500)
-        else
-          res.send(req.body.issues)
+        } else {
+          Issue.find({'_id': {$in: ids}})
+              .populate(Issue.defaultSelectOpts())
+              .sort('-createdAt')
+              .exec((err, issues) => {
+                if (err)
+                  res.sendStatus(500)
+                else {
+                  issues = issues.map((i) => Issue.jsonFormat(i, req.user))
+                  res.json({issues: issues})
+                }
+              })
+        }
       })
 }
 

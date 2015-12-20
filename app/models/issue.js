@@ -1,16 +1,12 @@
 const mongoose = require('mongoose')
 const User     = require('./user')
+const Activity = require('./activity')
 const util     = require('../utils')
 
 const IssueSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
-  },
-  description: {
-    type: String,
-    required: true,
-    default: null
   },
   priority: {
     type: String,
@@ -47,7 +43,8 @@ const IssueSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     unique: true
-  }]
+  }],
+  activities: [Activity.schema]
 })
 
 IssueSchema.methods.vote = function (user) {
@@ -62,7 +59,10 @@ IssueSchema.methods.vote = function (user) {
 IssueSchema.statics.defaultSelectOpts = function () {
   return [
     {path: 'creator', select: '_id username'},
-    {path: 'assignee', select: '_id username'}
+    {path: 'assignee', select: '_id username'},
+    {path: 'activities', select: '_id content type createdAt'},
+    {path: 'activities.user', select: '_id username'},
+    {path: 'activities.taggedUser', select: '_id username'}
   ]
 }
 

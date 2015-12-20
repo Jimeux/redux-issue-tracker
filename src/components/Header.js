@@ -4,14 +4,11 @@ export default class Header extends React.Component {
   render() {
     return (
         <header>
-          <span style={{float: 'left'}}>Issue Tracker</span>
-          {!this.props.loggedIn ? null :
-            <span style={{float: 'right'}}>
-              <button type="button" id="issue-modal" className="btn btn-danger" ref="modal"
-                      data-toggle="modal" data-target="#modal-issue">
-                Create Issue
-              </button>
-              </span>}
+          <a className="brand">
+            <img src="public/images/ic_menu.png" height="24px" width="24px"
+            style={{marginBottom: 2, marginRight: 10}}/>
+            I<small>SSUE</small> T<small>RACKER</small>
+          </a>
         </header>
     )
   }

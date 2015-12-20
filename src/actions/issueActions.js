@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import Rest from 'helpers/rest'
 import { SUBMIT_FORM, SUBMISSION_COMPLETED } from 'actions/issueFormActions'
+import { SET_ALERT, CLEAR_ALERT } from 'actions/alertActions'
 
 export const ADD_ISSUE = 'ADD_ISSUE'
 export const ADD_ISSUE_ERROR = 'ADD_ISSUE_ERROR'
@@ -50,11 +51,11 @@ export function fetchIssues() {
     fetch('/issues', {headers: Rest.headers(token)})
         .then(response => response.json())
         .then(json =>
-            dispatch({type: RECEIVE_ISSUES, issues: json.issues}))
+          dispatch({type: RECEIVE_ISSUES, issues: json.issues}))
   }
 }
 
-export function patchIssue(issue, field, value) {
+/*export function patchIssue(issue, field, value) {
   return (dispatch, getState) => {
     const token = getState().auth.token
 
@@ -62,7 +63,7 @@ export function patchIssue(issue, field, value) {
         .then(response => response.json()) //TODO: errors
         .then(issue => dispatch(updateIssue(issue)))
   }
-}
+}*/
 
 export function updateIssues(issues, field, value, update) {
   return (dispatch, getState) => {
@@ -74,8 +75,12 @@ export function updateIssues(issues, field, value, update) {
 
     fetch(`/issues`, Rest.getOptions('PATCH', {issues, field, value}, token))
         .then(response => response.json()) //TODO: errors
-        .then(ids => {
-          dispatch({type: UPDATE_MANY, ids, field, update})
+        .then(json => {
+          dispatch({type: UPDATE_MANY, updated: json.issues})
+        })
+        .catch(error => {
+          console.log(error);
+          dispatch({type: SET_ALERT, message: `Couldn't update issue(s)`})
         })
   }
 }
@@ -87,7 +92,9 @@ export function createVote(issue) {
     fetch(`/issues/${issue}/plusone`, Rest.getOptions('POST', {}, token))
         .then(response => response.json())
         .then(issue => dispatch(updateIssue(issue)))
-        .catch(console.log.bind(console))
+        .catch(() => {
+          dispatch({type: SET_ALERT, message: `Couldn't register vote`})
+        })
   }
 }
 

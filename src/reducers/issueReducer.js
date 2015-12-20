@@ -18,12 +18,15 @@ export default function issues(state = initialState, action) {
   switch (action.type) {
 
     case UPDATE_MANY:
+      console.log(action.updated);
       return updateState({
-        items: items.map(i => {
-          if (action.ids.includes(i._id)) {
-            i[action.field] = action.update
+        items: items.map(item => {
+          const found = action.updated.find(issue => issue._id === item._id)
+          if (found) {
+            found.selected = item.selected
+            found.showDetails = item.showDetails
           }
-          return i
+          return (found) ? found : item
         })
       })
 

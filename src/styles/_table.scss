@@ -95,6 +95,11 @@
     text-align: center;
   }
 
+  .status-sm {
+    width: auto;
+    line-height: 16px;
+  }
+
   .status-resolved {
     background: $colorGreen400;
   }
@@ -124,7 +129,7 @@
 .toolbar-row {
   background: $colorGrey50;
   .toolbar-cell {
-    padding: 12px !important;
+    padding: 16px !important;
     padding-left: 0 !important;
   }
   button {
@@ -162,7 +167,18 @@
 }
 .vote-cell {
   padding-right: 15px !important;
+
+  .btn-plus-one {
+    border-radius: 5px 5px 0 0;
+  }
+
+  .btn-count {
+    border-radius: 0 0 5px 5px;
+    border-top: 0;
+  }
 }
+
+
 
 .footer-visible-false {
   display: none;
@@ -170,15 +186,46 @@
   opacity: 0;
 }
 
+.footer-visible-true:hover {
+  background: white !important;
+  cursor: auto !important;
+}
+
 .footer-visible-true {
   opacity: 1;
   display: table-row;
-  background: $colorGrey50;
+
+  .activity-list {
+    padding-left: 25px;
+  }
+
+  .detail-title {
+    font-size: 17px;
+    white-space: normal;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .comment {
+    border: 1px solid $colorGrey400;
+    white-space: normal;
+    background: $colorGrey50;
+    line-height: 20px;
+    padding: 10px 14px;
+    max-width: 600px;
+    margin-top: 10px;
+    display: inline-block;
+    border-radius: 3px;
+  }
+
+  li {
+    margin: 10px 0;
+  }
 
   td {
     overflow: scroll;
     border: none;
     text-wrap: normal;
-    padding: 20px !important;
+    padding: 15px 25px !important;
   }
 }
