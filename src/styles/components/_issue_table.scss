@@ -1,0 +1,62 @@
+@import "../variables";
+@import "../palette";
+
+.issue-table {
+  @import "issue_row";
+
+  max-width: 730px;
+  min-width: 730px;
+
+  input { outline:none; }
+
+  position: relative;
+  z-index: 100;
+  box-shadow: $elevation-4dp;
+  background: white;
+  margin: 30px auto;
+  color: $colorGrey800;
+  border-collapse: collapse;
+
+  input[type=checkbox] {
+    margin-left: 8px;
+  }
+
+  th {
+    font-weight: normal;
+    cursor: pointer;
+    /* Prevent text selection */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  th:hover {
+    //color: $colorBlueGrey400;
+  }
+  th, td {
+    text-align: left;
+    padding: 15px 12px;
+    border-bottom: 1px solid $colorGrey200;
+  }
+  td {
+    white-space: nowrap;
+    vertical-align: top;
+    font-weight: 300;
+  }
+  tbody tr {
+    transition: all .3s ease;
+  }
+
+  tbody tr:hover {
+    cursor: pointer;
+    background: $colorGrey50;
+    color: $colorGrey800;
+  }
+
+  .checkbox-cell {
+    width: 50px;
+    text-align: center;
+  }
+}
