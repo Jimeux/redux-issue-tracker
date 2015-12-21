@@ -3,75 +3,53 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { Router, Route, Link } from 'react-router'
+
 import LoginForm from 'components/LoginForm'
 import Header from 'components/Header'
 import IssueTable from 'components/IssueTable'
 import IssueForm from 'components/IssueForm'
+import Menu from 'components/Menu'
+import Fab from 'components/Fab'
 import SnackBar from 'components/SnackBar'
+
 import * as FormActionCreators from 'actions/issueFormActions'
 import * as AuthActionCreators from 'actions/authActions'
 import * as LoginActionCreators from 'actions/loginFormActions'
 import * as AlertActionCreators from 'actions/alertActions'
+import * as MenuActionCreators from 'actions/menuActions'
 
 import 'styles/core.scss'
 
 class App extends React.Component {
   render() {
-    const { loggedIn, issueFormState, loginFormState, alert } = this.props
-    const { issueFormActions, loginFormActions, alertActions } = this.props
+    const { loggedIn, issueFormState, loginFormState, alert, menu } = this.props
+    const { issueFormActions, loginFormActions, alertActions, menuActions } = this.props
 
     return (
         <div className="app">
           <ReactCSSTransitionGroup transitionName="menu"
                                    transitionEnterTimeout={500}
                                    transitionLeaveTimeout={300}>
-            {!alert ? null : <Menu />}
+            {menu.open ? <Menu {...menuActions}/> : null}
           </ReactCSSTransitionGroup>
 
-          <Header loggedIn={loggedIn}/>
+          <Header loggedIn={loggedIn} {...menuActions} />
 
-          {!loggedIn ? null : <IssueForm {...issueFormActions} {...issueFormState} />}
+          {loggedIn ? <IssueForm {...issueFormActions} {...issueFormState} /> : null}
 
-          {!loggedIn ? null :
-              <ReactCSSTransitionGroup transitionName="table"
-                                       transitionAppear={true}
-                                       transitionAppearTimeout={500}
-                                       transitionEnterTimeout={500}
-                                       transitionLeaveTimeout={300}>
-                <IssueTable/>
-              </ReactCSSTransitionGroup>}
+          <ReactCSSTransitionGroup transitionName="table"
+                                   transitionEnterTimeout={500}
+                                   transitionLeaveTimeout={300}>
+            {loggedIn ? <IssueTable/> : null}
+          </ReactCSSTransitionGroup>
 
-          {loggedIn ? null : <LoginForm {...loginFormActions} {...loginFormState} />}
+          {!loggedIn ? <LoginForm {...loginFormActions} {...loginFormState} /> : null}
 
+          <SnackBar {...alertActions} alert={alert}/>
 
-          <SnackBar {...alertActions} alert={alert} />
+          {loggedIn ? <Fab /> : null }
 
-          {!this.props.loggedIn ? null :
-              <button type="button" id="issue-modal" className="btn-create" ref="modal"
-                      data-toggle="modal" data-target="#modal-issue">
-                <img src="/public/images/ic_edit.png"/>
-              </button>}
-
-        </div>
-    )
-  }
-}
-
-class Menu extends React.Component {
-  render() {
-    return (
-        <div className="menu">
-          <div className="heading">
-            I<small>SSUE</small> T<small>RACKER</small>
-          </div>
-          <div className="body">
-            <span className="user">Logged in as James</span>
-            <ul>
-              <li>My Issues</li>
-              <li>Profile</li>
-              <li>Log out</li>
-            </ul>
-          </div>
         </div>
     )
   }
@@ -83,12 +61,14 @@ function mapPropsToState(state) {
     alert: state.alert,
     authState: state.auth,
     issueFormState: state.issueForm,
-    loginFormState: state.loginForm
+    loginFormState: state.loginForm,
+    menu: state.menu
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    menuActions: bindActionCreators(MenuActionCreators, dispatch),
     issueFormActions: bindActionCreators(FormActionCreators, dispatch),
     loginFormActions: bindActionCreators(LoginActionCreators, dispatch),
     authActions: bindActionCreators(AuthActionCreators, dispatch),

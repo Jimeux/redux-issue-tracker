@@ -42,7 +42,12 @@
     overflow: scroll;
     border: none;
     text-wrap: normal;
-    padding: 15px 25px !important;
+    padding: 10px 10px;
+  }
+
+  .status-sm {
+    width: auto;
+    line-height: 16px;
   }
 }
 

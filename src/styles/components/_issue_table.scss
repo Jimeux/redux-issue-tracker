@@ -2,8 +2,6 @@
 @import "../palette";
 
 .issue-table {
-  @import "issue_row";
-
   max-width: 730px;
   min-width: 730px;
 
@@ -32,13 +30,10 @@
     -ms-user-select: none;
     user-select: none;
   }
-  th:hover {
-    //color: $colorBlueGrey400;
-  }
   th, td {
     text-align: left;
     padding: 15px 12px;
-    border-bottom: 1px solid $colorGrey200;
+    border-top: 1px solid $colorGrey200;
   }
   td {
     white-space: nowrap;
@@ -59,4 +54,33 @@
     width: 50px;
     text-align: center;
   }
+}
+
+.no-issues {
+  td {
+    padding: 35px 12px;
+  }
+  .message {
+    font-size: 18px;
+  }
+}
+
+/* Transitions */
+
+.table-enter {
+  opacity: 0.01;
+}
+
+.table-enter.table-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.table-leave {
+  opacity: 1;
+}
+
+.table-leave.table-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

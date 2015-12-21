@@ -1,14 +1,18 @@
-import { SET_ALERT, CLEAR_ALERT } from 'actions/alertActions'
+import { OPEN_MENU, CLOSE_MENU } from 'actions/menuActions'
 
-export default function alerts(state = null, action) {
+const initialState = {
+  open: false
+}
+
+export default function menu(state = initialState, action) {
 
   switch (action.type) {
 
-    case SET_ALERT:
-      return action.message
+    case OPEN_MENU:
+      return { open: true }
 
-    case CLEAR_ALERT:
-      return null
+    case CLOSE_MENU:
+      return { openFalse: true }
 
     default:
       return state

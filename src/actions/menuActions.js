@@ -1,10 +1,10 @@
-export const SET_ALERT = 'SET_ERROR'
-export const CLEAR_ALERT = 'CLEAR_ALERT'
+export const OPEN_MENU = 'OPEN_MENU'
+export const CLOSE_MENU = 'CLOSE_MENU'
 
-export function setAlert(message) {
-  return {type: SET_ALERT, message}
+export function openMenu() {
+  return {type: OPEN_MENU}
 }
 
-export function clearAlert() {
-  return {type: CLEAR_ALERT}
+export function closeMenu() {
+  return {type: CLOSE_MENU}
 }

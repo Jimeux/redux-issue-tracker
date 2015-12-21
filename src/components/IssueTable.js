@@ -25,15 +25,18 @@ export default class IssueTable extends React.Component {
     return (
         <table className="issue-table">
           <IssueHeader {...issueActions} {...issueState} {...authState} />
-          {items.length > 0 ? null :
+
+          {rows}
+
+          {rows.length > 0 ? null :
               <tbody>
               <tr className="no-issues">
-                <td colSpan={5}>
-                  <h3>No issues found...</h3>
+                <td colSpan={1}/>
+                <td colSpan={4}>
+                  <span className="message">No issues found...</span>
                 </td>
               </tr>
               </tbody>}
-          {rows}
         </table>
     )
   }

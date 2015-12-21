@@ -8,9 +8,10 @@ import auth from 'reducers/authReducer'
 import issueForm from 'reducers/issueFormReducer'
 import loginForm from 'reducers/loginFormReducer'
 import alert from 'reducers/alertReducer'
+import menu from 'reducers/menuReducer'
 
 const rootReducer = combineReducers({
-  filters, issues, auth, issueForm, loginForm, alert
+  filters, issues, auth, issueForm, loginForm, alert, menu
 })
 
 const createStoreWithMiddleware = applyMiddleware(

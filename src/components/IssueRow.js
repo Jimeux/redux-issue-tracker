@@ -16,7 +16,7 @@ export default class IssueRow extends React.Component {
     const summary = `Created ${Util.timeFromNow(issue.createdAt)} by ${issue.creatorName}`
 
     return (
-        <tbody className={`row-selected-${issue.selected}`}>
+        <tbody className={`issue-row selected-${issue.selected}`}>
         <tr>
           <td className="checkbox-cell">
             <input onChange={checkAllFn} type="checkbox" checked={!!issue.selected}/>
