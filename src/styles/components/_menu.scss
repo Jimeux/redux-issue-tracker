@@ -1,0 +1,72 @@
+@import "../variables";
+@import "../palette";
+
+.menu {
+  width: 280px;
+  box-shadow: $elevation-8dp;
+  height: 100%;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: $colorBlue400;
+  color: white;
+
+  .heading {
+    background: $colorBlue400;
+    background: rgb(106, 137, 252); /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(165deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 60%, rgba(115, 143, 254, 1) 60%, rgba(115, 143, 254, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6a89fc', endColorstr='#738ffe', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+    font-size: 20px;
+    padding: 20px 25px;
+    display: block;
+    height: 110px;
+  }
+  .user {
+    color: $colorBlue50;
+    padding: 20px 0;
+    border-bottom: 1px solid $colorBlue300;
+    margin: 15px 25px;
+    display: block;
+  }
+  .body {
+    ul {
+      list-style: none;
+      padding: 0;
+      color: $colorBlue50;
+    }
+    li {
+      color: $colorBlue50;
+      padding: 18px 30px;
+      font-size: 16px;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 150ms ease-in;
+      border-bottom: 1px solid $colorBlue400;
+    }
+    li:hover {
+      background: $colorBlue300;
+      color: white;
+    }
+  }
+}
+
+.menu-enter {
+  transform: translateX(-280px);
+}
+
+.menu-enter.menu-enter-active {
+  transform: none;
+  transition: transform 200ms ease-in;
+}
+
+.menu-leave {
+  transform: none;
+}
+
+.menu-leave.menu-leave-active {
+  transform: translateX(-280px);
+  transition: transform 250ms ease-out;
+}

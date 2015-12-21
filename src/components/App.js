@@ -7,6 +7,7 @@ import LoginForm from 'components/LoginForm'
 import Header from 'components/Header'
 import IssueTable from 'components/IssueTable'
 import IssueForm from 'components/IssueForm'
+import SnackBar from 'components/SnackBar'
 import * as FormActionCreators from 'actions/issueFormActions'
 import * as AuthActionCreators from 'actions/authActions'
 import * as LoginActionCreators from 'actions/loginFormActions'
@@ -43,17 +44,7 @@ class App extends React.Component {
           {loggedIn ? null : <LoginForm {...loginFormActions} {...loginFormState} />}
 
 
-          <ReactCSSTransitionGroup transitionName="snackbar"
-                                   transitionEnterTimeout={500}
-                                   transitionLeaveTimeout={300}>
-            {!alert ? null :
-                <div className="snackbar" key="snackbar-key">
-                  <div>{alert}
-                    <a className="snackbar-link"
-                       onClick={() => alertActions.clearAlert()}>CLOSE</a>
-                  </div>
-                </div>}
-          </ReactCSSTransitionGroup>
+          <SnackBar {...alertActions} alert={alert} />
 
           {!this.props.loggedIn ? null :
               <button type="button" id="issue-modal" className="btn-create" ref="modal"

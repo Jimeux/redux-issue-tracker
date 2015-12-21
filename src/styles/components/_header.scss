@@ -1,0 +1,34 @@
+@import "../variables";
+@import "../palette";
+
+header {
+  position: fixed;
+  text-align: left;
+  top: 0;
+  width: 100%;
+  color: white;
+  font-weight: 300;
+  padding: 15px;
+  font-size: 18px;
+  height: 148px;
+  background: $colorBlue500;
+  z-index: 1;
+
+  background: $colorBlue400;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#6a89fc+0,5677fc+28,738ffe+28,738ffe+100 */
+  background: rgb(106, 137, 252); /* Old browsers */
+  background: -moz-linear-gradient(-45deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(165deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6a89fc', endColorstr='#738ffe', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+
+  .brand {
+    margin-left: 5px;
+    color: white;
+  }
+  .brand:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}

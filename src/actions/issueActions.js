@@ -51,6 +51,10 @@ export function fetchIssues() {
         .then(response => response.json())
         .then(json =>
           dispatch({type: RECEIVE_ISSUES, issues: json.issues}))
+        .catch(error => {
+          console.error(error);
+          dispatch({type: SET_ALERT, message: `Couldn't get issues`})
+        })
   }
 }
 
@@ -68,7 +72,7 @@ export function updateIssues(issues, field, value, update) {
           dispatch({type: UPDATE_MANY, updated: json.issues})
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
           dispatch({type: SET_ALERT, message: `Couldn't update issue(s)`})
         })
   }
@@ -81,7 +85,8 @@ export function createVote(issue) {
     fetch(`/issues/${issue}/plusone`, Rest.getOptions('POST', {}, token))
         .then(response => response.json())
         .then(issue => dispatch(updateIssue(issue)))
-        .catch(() => {
+        .catch(error => {
+          console.error(error)
           dispatch({type: SET_ALERT, message: `Couldn't register vote`})
         })
   }
@@ -91,7 +96,7 @@ export function updateIssue(issue) {
   return {type: UPDATE_SINGLE, issue}
 }
 
-export function showDescription(issueId, show) {
+export function showDetails(issueId, show) {
   return {type: SHOW_DESC, issueId, show}
 }
 

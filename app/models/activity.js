@@ -4,7 +4,6 @@ const User     = require('./user')
 const Types = {
   CREATED: 'created',
   COMMENTED: 'commented',
-  MARKED_AS: 'marked as',
   ASSIGNED_TO: 'assigned to',
   CHANGED_STATUS: 'status changed to'
 }

@@ -1,0 +1,52 @@
+@import "../variables";
+@import "../palette";
+
+.activity-list-visible-false {
+  display: none;
+  transition: all 0.9s ease;
+  opacity: 0;
+}
+
+.activity-list-visible-true {
+  opacity: 1;
+  display: table-row;
+
+  .items {
+    padding-left: 25px;
+  }
+
+  .detail-title {
+    font-size: 17px;
+    white-space: normal;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .comment {
+    border: 1px solid $colorGrey400;
+    white-space: normal;
+    background: $colorGrey50;
+    line-height: 20px;
+    padding: 10px 14px;
+    max-width: 600px;
+    margin-top: 10px;
+    display: inline-block;
+    border-radius: 3px;
+  }
+
+  li {
+    margin: 10px 0;
+  }
+
+  td {
+    overflow: scroll;
+    border: none;
+    text-wrap: normal;
+    padding: 15px 25px !important;
+  }
+}
+
+.activity-list-visible-true:hover {
+  background: white !important;
+  cursor: auto !important;
+}

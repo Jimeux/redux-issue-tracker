@@ -3,123 +3,17 @@
 @import "bootstrap";
 @import "table";
 
-header {
-  position: fixed;
-  text-align: left;
-  top: 0;
-  width: 100%;
-  color: white;
-  font-weight: 300;
-  padding: 15px;
-  font-size: 18px;
-  height: 148px;
-  background: $colorBlue500;
-  z-index: 1;
-
-  background: $colorBlue400;
-
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#6a89fc+0,5677fc+28,738ffe+28,738ffe+100 */
-  background: rgb(106, 137, 252); /* Old browsers */
-  background: -moz-linear-gradient(-45deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(165deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6a89fc', endColorstr='#738ffe', GradientType=1); /* IE6-9 fallback on horizontal gradient */
-
-  .brand {
-    margin-left: 5px;
-    color: white;
-  }
-  .brand:hover {
-    text-decoration: none;
-    cursor: pointer;
-  }
-}
-
-.menu {
-  width: 280px;
-  box-shadow: $elevation-8dp;
-  height: 100%;
-  z-index: 999;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: $colorBlue400;
-  color: white;
-
-  .heading {
-    background: $colorBlue400;
-    background: rgb(106, 137, 252); /* Old browsers */
-    background: -moz-linear-gradient(-45deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 28%, rgba(115, 143, 254, 1) 28%, rgba(115, 143, 254, 1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(165deg, rgba(106, 137, 252, 1) 0%, rgba(86, 119, 252, 1) 60%, rgba(115, 143, 254, 1) 60%, rgba(115, 143, 254, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6a89fc', endColorstr='#738ffe', GradientType=1); /* IE6-9 fallback on horizontal gradient */
-    font-size: 20px;
-    padding: 20px 25px;
-    display: block;
-    height: 110px;
-  }
-  .user {
-    color: $colorBlue50;
-    padding: 20px 0;
-    border-bottom: 1px solid $colorBlue300;
-    margin: 15px 25px;
-    display: block;
-  }
-  .body {
-    ul {
-      list-style: none;
-      padding: 0;
-      color: $colorBlue50;
-    }
-    li {
-      color: $colorBlue50;
-      padding: 18px 30px;
-      font-size: 16px;
-      font-weight: 300;
-      cursor: pointer;
-      transition: all 150ms ease-in;
-      border-bottom: 1px solid $colorBlue400;
-    }
-    li:hover {
-      background: $colorBlue300;
-      color: white;
-    }
-  }
-}
-
-.btn-create {
-  box-shadow: $elevation-2dp;
-  background: $colorPink400;
-  border: none;
-  border-radius: 28px;
-  width: 56px;
-  height: 56px;
-  outline: none;
-
-  position: fixed;
-  z-index: 400;
-  top: 115px;
-  right: 50px;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-.btn-create:hover {
-  background: $colorPink500;
-}
+@import "components/header";
+@import "components/menu";
+@import "components/activity_list";
+@import "components/issue_header";
+@import "components/issue_row";
+@import "components/fab";
+@import "components/snackbar";
 
 /** START Bootstrap overrides **/
-.btn {
-  outline: none !important;
-}
-
-.dropdown {
-  display: inline-block;
-}
-
+.btn      { outline: none !important }
+.dropdown { display: inline-block }
 /** END Bootstrap overrides **/
 
 body {
@@ -167,35 +61,4 @@ body {
   .last-form-group {
     margin-bottom: 2px;
   }
-}
-
-.snackbar {
-  .snackbar-link {
-    float: right;
-    color: $colorPink200;
-    font-weight: 300;
-    cursor: pointer;
-  }
-  .snackbar-link:hover {
-    text-decoration: none;
-  }
-
-  div {
-    box-shadow: $elevation-2dp;
-    border-radius: 2px;
-    max-width: 600px;
-    color: white;
-    font-size: 16px;
-    font-weight: 300;
-    text-align: left;
-    margin: auto;
-    padding: 16px 26px;
-    background: #323232;
-  }
-
-  text-align: center;
-  bottom: 0;
-  z-index: 999;
-  position: fixed;
-  width: 100%;
 }

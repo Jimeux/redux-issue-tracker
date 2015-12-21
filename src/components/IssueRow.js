@@ -1,6 +1,7 @@
 import React from 'react'
 import { Roles } from 'actions/authActions'
 import Util from 'util/util'
+import ActivityList from 'components/ActivityList'
 
 export default class IssueRow extends React.Component {
 
@@ -9,7 +10,7 @@ export default class IssueRow extends React.Component {
   }
 
   render() {
-    const {issue, showDescription, createVote, userId} = this.props
+    const {issue, showDetails, createVote, userId} = this.props
     const resolved = issue.resolved ? 'Resolved' : issue.assignee === null ? 'New' : 'Unresolved'
     const checkAllFn = (e) => this.handleSelection(e, issue._id)
     const summary = `Created ${Util.timeFromNow(issue.createdAt)} by ${issue.creatorName}`
@@ -30,7 +31,7 @@ export default class IssueRow extends React.Component {
             </div>
           </td>
 
-          <td className="title-cell" onClick={() => showDescription(issue._id, !issue.showDetails)}>
+          <td className="title-cell" onClick={() => showDetails(issue._id, !issue.showDetails)}>
             <div className="title">{issue.title}</div>
             <div>{summary}</div>
           </td>
@@ -43,69 +44,10 @@ export default class IssueRow extends React.Component {
           </td>
         </tr>
 
-        <tr className={`footer-visible-${issue.showDetails}`}>
-          <td colSpan={5}>
-            <div className="detail-title">{issue.title}</div>
-            <ul className="activity-list">
-              {this.printDetails()}
-            </ul>
-          </td>
-        </tr>
+        <ActivityList issue={issue}/>
+
         </tbody>
     )
-  }
-
-  printDetails() {
-    return this.props.issue.activities.map(this.printActivity)
-  }
-
-  printActivity(activity) {
-    const Types = {
-      CREATED: 'created',
-      COMMENTED: 'commented',
-      MARKED_AS: 'marked as',
-      ASSIGNED_TO: 'assigned to',
-      CHANGED_STATUS: 'status changed to'
-    }
-
-    const a = activity
-
-    switch (activity.type) {
-      case Types.CREATED:
-        return (
-            <li>
-              {Util.capitalise(a.type)} by <a>{Util.capitalise(a.user.username)}</a> {Util.timeFromNow(a.createdAt)}<br/>
-              <span className="comment">{a.content}</span>
-            </li>
-        )
-      case Types.MARKED_AS:
-        return (
-            <li>
-              {Util.capitalise(a.type)} {a.content} by <a>{Util.capitalise(a.user.username)}</a> {Util.timeFromNow(a.createdAt)}
-            </li>
-        )
-      case Types.ASSIGNED_TO:
-        return (
-            <li>
-              {Util.capitalise(a.type)} <a>{Util.capitalise(a.taggedUser ? a.taggedUser.username : '')}</a> by <a>{Util.capitalise(a.user.username)}</a> {Util.timeFromNow(a.createdAt)}
-            </li>
-        )
-      case Types.CHANGED_STATUS:
-        return (
-            <li>
-              {Util.capitalise(a.type)} <span className={`status-${a.content} status-sm`}>{a.content}</span> by <a>{Util.capitalise(a.user.username)}</a> {Util.timeFromNow(a.createdAt)}
-            </li>
-        )
-
-    }
-
-    return (
-        <div>
-          <strong>{Util.capitalise(a.type)}&nbsp;
-            {a.taggedUser ? <a>{a.taggedUser.username}&nbsp;</a> : ''}
-            by <a>{a.user.username}</a> {Util.timeFromNow(a.createdAt)}</strong><br/>
-          {a.content}
-        </div>)
   }
 }
 

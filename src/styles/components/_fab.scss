@@ -1,0 +1,26 @@
+@import "../variables";
+@import "../palette";
+
+.btn-create {
+  box-shadow: $elevation-2dp;
+  background: $colorPink400;
+  border: none;
+  border-radius: 28px;
+  width: 56px;
+  height: 56px;
+  outline: none;
+
+  position: fixed;
+  z-index: 400;
+  top: 115px;
+  right: 50px;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.btn-create:hover {
+  background: $colorPink500;
+}

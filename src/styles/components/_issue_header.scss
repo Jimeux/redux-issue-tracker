@@ -1,0 +1,35 @@
+@import "../variables";
+@import "../palette";
+
+.toolbar-row {
+  background: $colorGrey50;
+  .toolbar-cell {
+    padding: 16px !important;
+    padding-left: 0 !important;
+  }
+  button {
+    font-size: 16px;
+    color: $colorGrey900;
+    background: transparent;
+    border: none;
+    margin-right: 4px;
+    border-radius: 2px;
+    font-weight: 300;
+    cursor: pointer;
+    outline: none;
+  }
+  .selection {
+    font-size: 16px;
+    font-weight: 300;
+    color: $colorGrey600;
+    float: right;
+    padding-top: 7px;
+    padding-right: 10px;
+    display: inline-block;
+  }
+  .search-box {
+    float: right;
+    display: inline;
+    width: 200px;
+  }
+}

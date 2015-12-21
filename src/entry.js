@@ -8,7 +8,7 @@ import store from 'store/store'
 import { Router, Route, Link } from 'react-router'
 
 /*--- START Bootstrap imports ---*/
-import jQuery from 'jquery'
+import jQuery from 'jquery'  //TODO: Replace with dropdown and modal libraries
 global.$ = jQuery
 global.jQuery = jQuery
 require('vendor/bootstrap/dropdown')

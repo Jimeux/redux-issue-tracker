@@ -59,7 +59,7 @@ module.exports = {
       {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass'],
-        include: path.join(__dirname, 'src', 'styles')
+        include: path.join(__dirname, 'src')
       }
     ]
   }

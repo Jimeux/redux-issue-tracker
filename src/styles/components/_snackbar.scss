@@ -1,0 +1,51 @@
+@import "../variables";
+@import "../palette";
+
+.snackbar {
+  .snackbar-link {
+    float: right;
+    color: $colorPink200;
+    font-weight: 300;
+    cursor: pointer;
+  }
+  .snackbar-link:hover {
+    text-decoration: none;
+  }
+
+  div {
+    box-shadow: $elevation-2dp;
+    border-radius: 2px;
+    max-width: 600px;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    margin: auto;
+    padding: 16px 26px;
+    background: #323232;
+  }
+
+  text-align: center;
+  bottom: 0;
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+}
+
+.snackbar-enter {
+  transform: translateY(66px);
+}
+
+.snackbar-enter.snackbar-enter-active {
+  transform: none;
+  transition: transform 250ms ease-in;
+}
+
+.snack-leave {
+  transform: none;
+}
+
+.snackbar-leave.snackbar-leave-active {
+  transform: translateY(66px);
+  transition: transform 250ms ease-out;
+}
