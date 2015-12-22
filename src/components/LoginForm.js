@@ -1,7 +1,10 @@
 import React from 'react'
 import FormBase from 'components/FormBase'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as LoginActionCreators from 'actions/loginFormActions'
 
-export default class LoginForm extends FormBase {
+class LoginForm extends FormBase {
 
   render() {
     const { submitting, values, errors } = this.props
@@ -84,3 +87,13 @@ LoginForm.prototype.Validators = class {
     }
   }
 }
+
+function mapPropsToState(state) {
+  return state.loginForm
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(LoginActionCreators, dispatch)
+}
+
+export default connect(mapPropsToState, mapDispatchToProps)(LoginForm)

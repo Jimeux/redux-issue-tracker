@@ -67,13 +67,15 @@
 
 /* Transitions */
 
-.table-enter {
+.table-enter, .table-appear {
   opacity: 0.01;
+  transform: translateY(-80px)
 }
 
-.table-enter.table-enter-active {
+.table-enter.table-enter-active, .table-appear.table-appear-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  transform: none;
+  transition: opacity 500ms ease-in, transform 400ms ease-in;
 }
 
 .table-leave {

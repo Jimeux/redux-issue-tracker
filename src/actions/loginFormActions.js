@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import Rest from 'helpers/rest'
+import { replacePath } from 'redux-simple-router'
 import { SAVE_DETAILS } from 'actions/authActions'
 import { SET_ALERT, CLEAR_ALERT } from 'actions/alertActions'
 
@@ -35,6 +36,7 @@ export function submitForm(formData) {
             response.json().then((oauthHash) => {
               dispatch({type: CLEAR_ALERT})
               dispatch({type: SAVE_DETAILS, hash: oauthHash})
+              dispatch(replacePath('/'))
             })
           } else {
             dispatch({type: SET_ALERT, message: 'Incorrect username or password'})

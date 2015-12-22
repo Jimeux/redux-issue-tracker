@@ -7,6 +7,7 @@ export default class FormBase extends React.Component {
     let error = this.props.errors[field]
     if (error || check)
       error = this.Validators[field](value)
+
     this.props.updateValue(field, value, error)
   }
 

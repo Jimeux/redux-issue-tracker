@@ -7,7 +7,7 @@ import { Roles, fetchEditors } from 'actions/authActions'
 import { selectIssues } from 'reducers/issueReducer'
 import * as IssueActionCreators from 'actions/issueActions'
 
-export default class IssueTable extends React.Component {
+class IssueTable extends React.Component {
 
   componentDidMount() {
     this.props.issueActions.fetchIssues()
