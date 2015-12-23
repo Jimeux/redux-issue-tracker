@@ -1,5 +1,5 @@
 import {
-    ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DESC, UPDATE_SINGLE,
+    ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DETAILS, UPDATE_SINGLE,
     SORT, SEARCH, SELECT_ALL, SELECT_ISSUE, SET_FILTER, UPDATE_MANY, Filter, SET_ASSIGNED
 } from 'actions/issueActions'
 
@@ -18,7 +18,6 @@ export default function issues(state = initialState, action) {
   switch (action.type) {
 
     case UPDATE_MANY:
-      console.log(action.updated);
       return updateState({
         items: items.map(item => {
           const found = action.updated.find(issue => issue._id === item._id)
@@ -53,7 +52,7 @@ export default function issues(state = initialState, action) {
         items: updateItem(action.id, 'selected', action.checked)
       })
 
-    case SHOW_DESC:
+    case SHOW_DETAILS:
       return updateState({
         items: updateItem(action.issueId, 'showDetails', action.show)
       })

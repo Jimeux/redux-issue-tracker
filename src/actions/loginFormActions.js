@@ -1,5 +1,4 @@
-import fetch from 'isomorphic-fetch'
-import Rest from 'helpers/rest'
+import UserService from 'services/UserService'
 import { replacePath } from 'redux-simple-router'
 import { SAVE_DETAILS } from 'actions/authActions'
 import { SET_ALERT, CLEAR_ALERT } from 'actions/alertActions'
@@ -27,22 +26,19 @@ export function submitForm(formData) {
 
     dispatch({ type: SUBMIT_LOGIN_FORM })
 
-    const body = Rest.passwordGrant(formData.username, formData.password)
-    const options = Rest.getOptions('POST', body)
-
-    fetch('/oauth/token', options)
-        .then(response => {
-          if (response.status >= 200 && response.status < 300) {
-            response.json().then((oauthHash) => {
-              dispatch({type: CLEAR_ALERT})
-              dispatch({type: SAVE_DETAILS, hash: oauthHash})
-              dispatch(replacePath('/'))
-            })
-          } else {
-            dispatch({type: SET_ALERT, message: 'Incorrect username or password'})
-            dispatch({type: LOGIN_SUBMIT_COMPLETE})
-          }
-        })
-        .catch(console.log.bind(console))
+   UserService.login(formData.username, formData.password)
+       .then(response => {
+         if (response.status >= 200 && response.status < 300) {
+           response.json().then((oauthHash) => {
+             dispatch({type: CLEAR_ALERT})
+             dispatch({type: SAVE_DETAILS, hash: oauthHash})
+             dispatch(replacePath('/'))
+           })
+         } else {
+           dispatch({type: SET_ALERT, message: 'Incorrect username or password'})
+           dispatch({type: LOGIN_SUBMIT_COMPLETE})
+         }
+       })
+       .catch(console.log.bind(console))
   }
 }

@@ -51,6 +51,9 @@
   .vote-cell {
     padding-right: 15px;
 
+    .btn-plus-one, .btn-count {
+      width: 100%;
+    }
     .btn-plus-one {
       border-radius: 5px 5px 0 0;
     }

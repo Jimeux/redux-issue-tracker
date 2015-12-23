@@ -60,11 +60,11 @@
   }
 }
 
-.menu-enter {
+.menu-enter, .menu-appear {
   transform: translateX(-280px);
 }
 
-.menu-enter.menu-enter-active {
+.menu-enter.menu-enter-active, .menu-appear.menu-appear-active {
   transform: none;
   transition: transform 200ms ease-in;
 }

@@ -1,0 +1,16 @@
+@import "../variables";
+@import "../palette";
+
+#login-form {
+  z-index: 400;
+  display: block;
+  position: relative;
+  box-shadow: $elevation-2dp;
+  border-radius: 4px;
+  background: white;
+  color: #757575;
+  text-align: left;
+  margin: 15% auto;
+  width: 350px;
+  padding: 20px;
+}

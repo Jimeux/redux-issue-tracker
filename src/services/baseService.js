@@ -1,4 +1,7 @@
-export default class Rest {
+import fetch from 'isomorphic-fetch'
+import Rest from 'helpers/rest'
+
+export default class BaseService {
 
   static getOptions(method, body, token) {
     return {

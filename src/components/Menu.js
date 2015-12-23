@@ -1,8 +1,9 @@
 import React from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class Menu extends React.Component {
   render() {
-    return (
+    const menu = (
         <div className="menu-container" onClick={() => this.props.closeMenu()}>
           <div className="menu" onClick={(e) => e.stopPropagation()}>
             <div className="heading">
@@ -18,6 +19,12 @@ export default class Menu extends React.Component {
             </div>
           </div>
         </div>
+    )
+
+    return (
+        <ReactCSSTransitionGroup transitionName="menu" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+          {this.props.open ? menu : null}
+        </ReactCSSTransitionGroup>
     )
   }
 }

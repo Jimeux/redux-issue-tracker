@@ -3,6 +3,7 @@
 
 .toolbar-row {
   background: $colorGrey50;
+
   .toolbar-cell {
     padding: 16px !important;
     padding-left: 0 !important;
@@ -26,10 +27,5 @@
     padding-top: 7px;
     padding-right: 10px;
     display: inline-block;
-  }
-  .search-box {
-    float: right;
-    display: inline;
-    width: 200px;
   }
 }

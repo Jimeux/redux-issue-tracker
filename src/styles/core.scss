@@ -1,21 +1,30 @@
 @import "variables";
 @import "bootstrap";
-
+/*** App styles ***/
 @import "components/header";
 @import "components/menu";
-
+@import "components/snackbar";
+/*** IssueTable styles ***/
 @import "components/issue_table";
 @import "components/issue_header";
+@import "components/searchbox";
 @import "components/issue_row";
+@import "components/issue_empty";
 @import "components/activity_list";
-
 @import "components/fab";
-@import "components/snackbar";
+/*** Form styles ***/
+@import "components/login_form";
+@import "components/issue_form";
 
-/** START Bootstrap overrides **/
-.btn      { outline: none !important }
-.dropdown { display: inline-block }
-/** END Bootstrap overrides **/
+/*** START Bootstrap overrides ***/
+.btn {
+  outline: none !important
+}
+
+.dropdown {
+  display: inline-block
+}
+/*** END Bootstrap overrides ***/
 
 body {
   background: $colorGrey100;
@@ -26,36 +35,10 @@ body {
   z-index: 10;
 }
 
-.card {
-  box-shadow: $elevation-2dp;
-  border-radius: 4px;
-  background: white;
-  color: #757575;
-  display: block;
+.error:before {
+  content: ' ';
 }
 
-#login-form {
-  @extend .card;
-
-  z-index: 400;
-  text-align: left;
-  margin: 15% auto;
-  width: 350px;
-  padding: 20px;
-}
-
-#modal-issue, #login-form {
-  .issue-modal {
-    text-align: left;
-    max-width: 440px;
-  }
-  .error:before {
-    content: ' ';
-  }
-  .error {
-    font-weight: normal;
-  }
-  .last-form-group {
-    margin-bottom: 2px;
-  }
+.error {
+  font-weight: normal;
 }

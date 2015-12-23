@@ -1,5 +1,4 @@
-import fetch from 'isomorphic-fetch'
-import Rest from 'helpers/rest'
+import UserService from 'services/UserService'
 
 export const RECEIVE_EDITORS = 'RECEIVE_EDITORS'
 export const SAVE_DETAILS = 'SAVE_DETAILS'
@@ -12,12 +11,8 @@ export const Roles = {
 
 export function fetchEditors() {
   return (dispatch, getState) => {
-    const token = getState().auth.token
-    const options = { headers: Rest.headers(token) }
-
-    fetch('/users/editors', options)
-        .then(response => response.json())
-        .then(json => dispatch(receiveEditors(json)))
+    UserService.getEditors(getState().auth.token)
+        .then(editors => dispatch(receiveEditors(editors)))
   }
 }
 

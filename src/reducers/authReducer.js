@@ -4,7 +4,7 @@ export default function auth(state = {
   userId: null,
   username: null,
   token: null,
-  role: 1,
+  role: 0,
   editors: []
 }, action) {
   const update = (obj) => Object.assign({}, state, obj)
