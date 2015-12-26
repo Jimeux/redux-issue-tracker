@@ -4,7 +4,7 @@ import {
 } from 'actions/issueActions'
 
 const initialState = {
-  isFetching: false,
+  isFetching: true,
   descending: true,
   items: [],
   query: null,

@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch'
-import Rest from 'helpers/rest'
 
 export default class BaseService {
 

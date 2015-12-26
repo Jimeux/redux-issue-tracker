@@ -10,7 +10,7 @@ import { syncReduxAndRouter } from 'redux-simple-router'
 import store from 'store/store'
 
 import App from 'components/App'
-import IssueTable from 'components/IssueTable'
+import IssuesRoute from 'components/IssuesRoute'
 import LoginForm from 'components/LoginForm'
 
 import 'styles/core.scss'
@@ -36,7 +36,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
-          <IndexRoute components={IssueTable} onEnter={authenticate}/>
+          <IndexRoute components={IssuesRoute} onEnter={authenticate}/>
           <Route path="/login" component={LoginForm}/>
         </Route>
       </Router>

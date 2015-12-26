@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 
 import Header from 'components/Header'
 import Menu from 'components/Menu'
-import IssueTable from 'components/IssueTable'
 import SnackBar from 'components/SnackBar'
 
 import * as AlertActionCreators from 'actions/alertActions'
