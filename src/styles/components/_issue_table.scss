@@ -58,12 +58,12 @@
 
 /* Transitions */
 
-.table-enter, .table-appear {
+.table-appear {
   opacity: 0.01;
   transform: translateY(-80px)
 }
 
-.table-enter.table-enter-active, .table-appear.table-appear-active {
+.table-enter-active, .table-appear.table-appear-active {
   opacity: 1;
   transform: none;
   transition: opacity 500ms ease-in, transform 400ms ease-in;

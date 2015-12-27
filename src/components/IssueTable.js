@@ -9,16 +9,30 @@ export default class IssueTable extends React.Component {
 
   render() {
     const { issueState, issueActions, authState } = this.props
+
+    const { pageUp, pageDown } = this.props.issueActions
+
     const rows = issueState.items.map((i) =>
-        <IssueRow {...issueActions} key={i._id} issue={i}/>)
+        <IssueRow {...issueActions} {...authState} key={i._id} issue={i}/>)
     const emptyMsg = (rows.length <= 0) ? <IssueEmpty/> : null
 
     return (
-          <table className="issue-table">
-            <IssueHeader {...issueState} {...issueActions} {...authState}/>
-            {rows}
-            {emptyMsg}
-          </table>
+        <table className="issue-table">
+          <IssueHeader {...issueState} {...issueActions} {...authState}/>
+          {rows}
+          {emptyMsg}
+          <tbody>
+          <tr>
+            <td colSpan={5}>
+              <div className="btn-group">
+                <button className="btn btn-default" onClick={() => pageDown()}>Previous</button>
+                <button className="btn btn-default">{issueState.page}</button>
+                <button className="btn btn-default" onClick={() => pageUp()}>Next</button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
     )
   }
 }

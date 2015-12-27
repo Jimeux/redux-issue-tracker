@@ -9,7 +9,7 @@
   width: 100%;
   height: 100%;
   display: block;
-  //background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .menu {
@@ -61,19 +61,31 @@
 }
 
 .menu-enter, .menu-appear {
-  transform: translateX(-280px);
+  background: rgba(0, 0, 0, 0.0);
+  .menu {
+    transform: translateX(-280px);
+  }
 }
 
 .menu-enter.menu-enter-active, .menu-appear.menu-appear-active {
-  transform: none;
-  transition: transform 200ms ease-in;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background 200ms ease-in;
+  .menu {
+    transform: none;
+    transition: transform 200ms ease-in;
+  }
 }
 
 .menu-leave {
   transform: none;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .menu-leave.menu-leave-active {
-  transform: translateX(-280px);
-  transition: transform 250ms ease-out;
+  background: rgba(0, 0, 0, 0.0);
+  transition: background 200ms ease-out;
+  .menu {
+    transform: translateX(-280px);
+    transition: transform 250ms ease-out;
+  }
 }

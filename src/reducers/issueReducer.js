@@ -1,10 +1,12 @@
 import {
     ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DETAILS, UPDATE_SINGLE,
-    SORT, SEARCH, SELECT_ALL, SELECT_ISSUE, SET_FILTER, UPDATE_MANY, Filter, SET_ASSIGNED
+    SORT, SEARCH, SELECT_ALL, SELECT_ISSUE, SET_FILTER, UPDATE_MANY, Filter, SET_ASSIGNED,
+    PAGE_UP, PAGE_DOWN
 } from 'actions/issueActions'
 
 const initialState = {
   isFetching: true,
+  page: 1,
   descending: true,
   items: [],
   query: null,
@@ -13,7 +15,7 @@ const initialState = {
 }
 
 export default function issues(state = initialState, action) {
-  const { descending, items } = state
+  const { descending, items, page } = state
 
   switch (action.type) {
 
@@ -32,6 +34,12 @@ export default function issues(state = initialState, action) {
     case ADD_ISSUE:
       return updateState({items: [action.issue, ...items]})
 
+    case PAGE_UP:
+      return updateState({page: page + 1})
+
+    case PAGE_DOWN:
+      return updateState({page: page > 1 ? page - 1 : 1})
+
     case SORT:
       return updateState({
         items: items.sort(sortIssues(action.order, descending)),
@@ -44,7 +52,7 @@ export default function issues(state = initialState, action) {
     case RECEIVE_ISSUES:
       return updateState({
         isFetching: false,
-        items: action.issues
+        items: [...items, ...action.issues]
       })
 
     case SELECT_ISSUE:
@@ -145,7 +153,10 @@ export default function issues(state = initialState, action) {
 }
 
 export function selectIssues(state) {
-  let { items, filter, query, assignedTo } = state
+  let { items, filter, query, assignedTo, page } = state
+
+  const perPage = 7
+  const start = page * perPage - perPage
 
   if (filter === Filter.UNASSIGNED)
     items = items.filter(issue => issue.selected || !issue.assignee)
@@ -168,5 +179,8 @@ export function selectIssues(state) {
           (i.assignee && i.assignee.username.toUpperCase().includes(query))
     })
   }
+
+  items = items.slice(start, start + perPage)
+
   return items
 }

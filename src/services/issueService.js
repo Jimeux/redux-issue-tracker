@@ -4,7 +4,7 @@ import BaseService from 'services/baseService'
 export default class IssueService extends BaseService {
 
   static getIssues(page = 1, token) {
-    return fetch('/issues', {headers: this.headers(token)})
+    return fetch(`/issues?page=${page}`, {headers: this.headers(token)})
         .then(response => response.json())
         .then(json => json.issues)
   }

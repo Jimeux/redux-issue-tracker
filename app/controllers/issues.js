@@ -22,10 +22,12 @@ router.route('/:id/plusone')
     .post(plusOne)
 
 function index(req, res) {
-
-  Issue.find({})
+  Issue
+      .find({})
       .populate(Issue.defaultSelectOpts())
       .sort('-createdAt')
+      .skip((req.query.page * 5) - 5)
+      .limit(7)
       .exec((err, issues) => {
         if (err)
           res.sendStatus(500)

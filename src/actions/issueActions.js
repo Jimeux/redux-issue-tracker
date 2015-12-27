@@ -14,6 +14,8 @@ export const SEARCH = 'SEARCH'
 export const SORT = 'SORT'
 export const SET_FILTER = 'SET_FILTER'
 export const SET_ASSIGNED = 'SET_ASSIGNED'
+export const PAGE_UP = 'PAGE_UP'
+export const PAGE_DOWN = 'PAGE_DOWN'
 
 export const Order = {
   DATE: 'createdAt',
@@ -39,11 +41,31 @@ export function setAssigned(id) {
   return {type: SET_ASSIGNED, id}
 }
 
+export function pageDown() {
+  return {type: PAGE_DOWN }
+}
+export function pageUp() {
+  return (dispatch, getState) => {
+    dispatch({type: PAGE_UP })
+
+    const perPage = 7
+    const page = getState().issues.page
+
+    if (getState().issues.items.length <= page * perPage - perPage) {
+      dispatch({type: REQUEST_ISSUES})
+
+      IssueService.getIssues(page, getState().auth.token)
+          .then(issues => dispatch({type: RECEIVE_ISSUES, issues}))
+          .catch(error => dispatch({type: SET_ALERT, message: `Couldn't get issues`}))
+    }
+  }
+}
+
 export function fetchIssues() {
   return (dispatch, getState) => {
     dispatch({type: REQUEST_ISSUES})
 
-    IssueService.getIssues(1, getState().auth.token)
+    IssueService.getIssues(getState().issues.page, getState().auth.token)
         .then(issues => dispatch({type: RECEIVE_ISSUES, issues}))
         .catch(error => dispatch({type: SET_ALERT, message: `Couldn't get issues`}))
   }

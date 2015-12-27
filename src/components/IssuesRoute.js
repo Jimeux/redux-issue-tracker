@@ -27,17 +27,23 @@ class IssuesRoute extends React.Component {
     const issueTableProps = {issueActions, issueState, authState, fetchEditors}
 
     const body = (
-        <ReactCSSTransitionGroup transitionName="table"
-                                 transitionAppear={true} transitionAppearTimeout={500}
-                                 transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+        <div>
           <Fab />
           <IssueForm {...issueFormActions} {...issueFormState}/>
           <IssueTable {...issueTableProps} />
-        </ReactCSSTransitionGroup>
+        </div>
     )
 
     return (
-        <div>{issueState.isFetching ? <LoadingView /> : body}</div>
+        <div>
+          {issueState.isFetching ? <LoadingView /> : null}
+          {issueState.items.length > 0 ? body :
+              <ReactCSSTransitionGroup transitionName="table"
+                                       transitionAppear={true} transitionAppearTimeout={500}
+                                       transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+                {body}
+              </ReactCSSTransitionGroup>}
+        </div>
     )
   }
 }

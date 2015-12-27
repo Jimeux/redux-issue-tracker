@@ -37,7 +37,9 @@ export default class IssueRow extends React.Component {
           </td>
 
           <td className="vote-cell">
-            <ActiveButton onClick={() => createVote(issue._id)} label="+1" active={issue.votes.includes(userId)}/>
+            <ActiveButton onClick={() => createVote(issue._id)}
+                          label="+1"
+                          active={issue.votes.includes(userId)}/>
             <button className="btn btn-xs btn-default btn-block btn-count">
               {issue.votes.length}
             </button>
