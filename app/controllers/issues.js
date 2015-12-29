@@ -16,18 +16,26 @@ router.route('/')
 
 router.route('/:id')
     .all(isEditor)
-    .patch(update)
 
 router.route('/:id/plusone')
     .post(plusOne)
 
 function index(req, res) {
+
+  const perPage = req.query.perPage || 10
+  let query = {}
+
+  if (req.query.assignee)
+    query = Object.assign({assignee: req.query.assignee}, query)
+  if (req.query.status)
+    query = Object.assign({status: parseInt(req.query.status)}, query)
+
   Issue
-      .find({})
-      .populate(Issue.defaultSelectOpts())
+      .find(query)
+      .populate(Issue.DefaultSelectOpts)
       .sort('-createdAt')
-      .skip((req.query.page * 5) - 5)
-      .limit(7)
+      .skip((req.query.page * perPage) - perPage)
+      .limit(perPage)
       .exec((err, issues) => {
         if (err)
           res.sendStatus(500)
@@ -42,7 +50,8 @@ function create(req, res) {
   const issue = new Issue({
     //category: 'General',
     title: req.body.title,
-    creator: req.user
+    creator: req.user,
+    status: 0
   })
 
   issue.activities.push({
@@ -53,19 +62,6 @@ function create(req, res) {
 
   saveIssue(res, issue, req.user, (err) => {
     res.status(422).json(err.errors)
-  })
-}
-
-function update(req, res) {
-  Issue.findById(req.params.id, (err, issue) => {
-    if (err)
-      res.sendStatus(422)
-    else {
-      const field = req.body.field
-      const value = req.body.value
-      issue[field] = value
-      saveIssue(res, issue, req.user, () => res.sendStatus(422))
-    }
   })
 }
 
@@ -85,9 +81,9 @@ function batchUpdate(req, res) {
   if (field === 'assignee') {
     type = Activity.Types.ASSIGNED_TO
     taggedUser = value
-  } else if (field === 'resolved') {
+  } else if (field === 'status') {
     type = Activity.Types.CHANGED_STATUS
-    content = value ? 'resolved' : 'unresolved'
+    content = Issue.Status[value]
   }
 
   const activity = {user, content, type, taggedUser}
@@ -100,14 +96,14 @@ function batchUpdate(req, res) {
           res.sendStatus(500)
         } else {
           Issue.find({'_id': {$in: ids}})
-              .populate(Issue.defaultSelectOpts())
+              .populate(Issue.DefaultSelectOpts)
               .sort('-createdAt')
               .exec((err, issues) => {
                 if (err)
                   res.sendStatus(500)
                 else {
                   issues = issues.map((i) => Issue.jsonFormat(i, req.user))
-                  res.json({issues: issues})
+                  res.json(issues)
                 }
               })
         }
@@ -130,7 +126,7 @@ function saveIssue(res, issue, user, errCallback) {
     if (err)
       errCallback(err)
     else {
-      issue.populate(Issue.defaultSelectOpts(), (err, issue) => {
+      issue.populate(Issue.DefaultSelectOpts, (err, issue) => {
         if (err)
           res.sendStatus(500)
         else

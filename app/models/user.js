@@ -18,6 +18,14 @@ const UserSchema = new mongoose.Schema({
     default  : 1,
     enum     : [0, 1, 2]
   }
+  /*,
+  settings: {
+    perPage: {
+      type: Number,
+      required: true,
+      default: 10
+    }
+  }*/
 })
 
 /**

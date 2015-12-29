@@ -3,8 +3,12 @@ import BaseService from 'services/baseService'
 
 export default class IssueService extends BaseService {
 
-  static getIssues(page = 1, token) {
-    return fetch(`/issues?page=${page}`, {headers: this.headers(token)})
+  static getIssues(token, page = 1, perPage = 10, assignee, status) {
+    let url = `/issues?page=${page}&perPage=${perPage}`
+    url += (assignee != null) ? `&assignee=${assignee}` : ''
+    url += (status != null) ? `&status=${status}` : ''
+
+    return fetch(url, {headers: this.headers(token)})
         .then(response => response.json())
         .then(json => json.issues)
   }
@@ -12,7 +16,6 @@ export default class IssueService extends BaseService {
   static patchIssues(issues, field, value, token) {
     return fetch(`/issues`, this.getOptions('PATCH', {issues, field, value}, token))
         .then(response => response.json())
-        .then(json => json.issues)
   }
 
   static createVote(issueId, token) {

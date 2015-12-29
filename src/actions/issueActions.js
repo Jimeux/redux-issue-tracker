@@ -12,7 +12,7 @@ export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
 export const SHOW_DETAILS = 'SHOW_DETAILS'
 export const SEARCH = 'SEARCH'
 export const SORT = 'SORT'
-export const SET_FILTER = 'SET_FILTER'
+export const SET_STATUS = 'SET_STATUS'
 export const SET_ASSIGNED = 'SET_ASSIGNED'
 export const PAGE_UP = 'PAGE_UP'
 export const PAGE_DOWN = 'PAGE_DOWN'
@@ -25,49 +25,56 @@ export const Order = {
   VOTES: 'voteCount'
 }
 
-export const Filter = {
-  ALL: 'All Issues',
-  NEW: 'New',
-  UNASSIGNED: 'Unassigned',
-  UNRESOLVED: 'Unresolved',
-  RESOLVED: 'Resolved'
+export const Status = [
+  'Unresolved',
+  'Resolved'
+]
+
+export function setStatus(status) {
+  return (dispatch, getState) => {
+    dispatch({type: SET_STATUS, status})
+    getIssues(dispatch, getState())
+  }
 }
 
-export function setFilter(filter) {
-  return {type: SET_FILTER, filter}
-}
-
-export function setAssigned(id) {
-  return {type: SET_ASSIGNED, id}
+export function setAssigned(assignee) {
+  return (dispatch, getState) => {
+    dispatch({type: SET_ASSIGNED, assignee})
+    getIssues(dispatch, getState())
+  }
 }
 
 export function pageDown() {
   return {type: PAGE_DOWN }
 }
+
 export function pageUp() {
   return (dispatch, getState) => {
     dispatch({type: PAGE_UP })
 
-    const perPage = 7
+    const perPage = getState().auth.perPage
     const page = getState().issues.page
 
-    if (getState().issues.items.length <= page * perPage - perPage) {
-      dispatch({type: REQUEST_ISSUES})
-
-      IssueService.getIssues(page, getState().auth.token)
-          .then(issues => dispatch({type: RECEIVE_ISSUES, issues}))
-          .catch(error => dispatch({type: SET_ALERT, message: `Couldn't get issues`}))
-    }
+    if (getState().issues.items.length <= page * perPage - perPage)
+      getIssues(dispatch, getState())
   }
+}
+
+function getIssues(dispatch, state) {
+  dispatch({type: REQUEST_ISSUES})
+
+  const assignee = (state.issues.assignedTo != null) ? state.issues.assignedTo._id : null
+  const status = (state.issues.status != null) ? state.issues.status : null
+  const perPage = state.auth.perPage
+
+  IssueService.getIssues(state.auth.token, state.issues.page, perPage, assignee, status)
+      .then(issues => dispatch({type: RECEIVE_ISSUES, issues}))
+      .catch(error => dispatch({type: SET_ALERT, message: `Couldn't get issues`}))
 }
 
 export function fetchIssues() {
   return (dispatch, getState) => {
-    dispatch({type: REQUEST_ISSUES})
-
-    IssueService.getIssues(getState().issues.page, getState().auth.token)
-        .then(issues => dispatch({type: RECEIVE_ISSUES, issues}))
-        .catch(error => dispatch({type: SET_ALERT, message: `Couldn't get issues`}))
+    getIssues(dispatch, getState())
   }
 }
 

@@ -1,7 +1,7 @@
 import {
-    ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DETAILS, UPDATE_SINGLE,
-    SORT, SEARCH, SELECT_ALL, SELECT_ISSUE, SET_FILTER, UPDATE_MANY, Filter, SET_ASSIGNED,
-    PAGE_UP, PAGE_DOWN
+    ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DETAILS, UPDATE_SINGLE, UPDATE_MANY,
+    SORT, SEARCH, SELECT_ALL, SELECT_ISSUE, PAGE_UP, PAGE_DOWN,
+    Status, SET_STATUS, SET_ASSIGNED
 } from 'actions/issueActions'
 
 const initialState = {
@@ -10,8 +10,8 @@ const initialState = {
   descending: true,
   items: [],
   query: null,
-  filter: Filter.ALL,
-  assignedTo: ''
+  status: null,
+  assignedTo: null
 }
 
 export default function issues(state = initialState, action) {
@@ -82,22 +82,18 @@ export default function issues(state = initialState, action) {
         })
       })
 
-    case SET_FILTER:
+    case SET_STATUS:
       return updateState({
-        filter: action.filter,
-        items: items.map(i => {
-          i.selected = false
-          return i
-        })
+        status: action.status,
+        page: 1,
+        items: []
       })
 
     case SET_ASSIGNED:
       return updateState({
-        assignedTo: action.id,
-        items: items.map(i => {
-          i.selected = false
-          return i
-        })
+        assignedTo: action.assignee,
+        page: 1,
+        items: []
       })
 
     case SEARCH:
@@ -152,30 +148,16 @@ export default function issues(state = initialState, action) {
   }
 }
 
-export function selectIssues(state) {
-  let { items, filter, query, assignedTo, page } = state
+export function selectIssues(state, perPage = 10) {
+  let { items, query, page } = state
 
-  const perPage = 7
   const start = page * perPage - perPage
-
-  if (filter === Filter.UNASSIGNED)
-    items = items.filter(issue => issue.selected || !issue.assignee)
-  else if (filter === Filter.UNRESOLVED)
-    items = items.filter(issue => issue.selected || !issue.resolved)
-  else if (filter === Filter.RESOLVED)
-    items = items.filter(issue => issue.selected || issue.resolved)
-  else if (filter === Filter.NEW)
-    items = items.filter(issue => issue.selected || (!issue.resolved && !issue.assignee))
-
-  if (assignedTo)
-    items = items.filter(issue => issue.selected ||
-    (issue.assignee && issue.assignee._id === assignedTo._id))
 
   if (query !== null) {
     query = query.toUpperCase()
     items = items.filter((i) => {
       return i.title.toUpperCase().includes(query) ||
-          (!i.assignee && Filter.UNASSIGNED.includes(query)) ||
+          (!i.assignee && Status[0].includes(query)) ||
           (i.assignee && i.assignee.username.toUpperCase().includes(query))
     })
   }

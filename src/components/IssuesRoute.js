@@ -49,7 +49,7 @@ class IssuesRoute extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const selected = {items: selectIssues(state.issues)}
+  const selected = {items: selectIssues(state.issues, state.auth.perPage)}
   return {
     issueState: Object.assign({}, state.issues, selected),
     issueFormState: state.issueForm,

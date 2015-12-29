@@ -1,19 +1,20 @@
 import React from 'react'
 import SearchBox from 'components/SearchBox'
-import { Filter, Order } from 'actions/issueActions'
+import { Status, Order } from 'actions/issueActions'
 
+//TODO: Split this up into Edit and Filter components
 export default class IssueHeader extends React.Component {
 
   render() {
-    const {items, updateIssues, filter, query, assignedTo, editors } = this.props // state
-    const { selectAll, search, sort, setFilter, setAssigned } = this.props //actions
+    const {items, updateIssues, status, query, assignedTo, editors } = this.props // state
+    const { selectAll, search, sort, setStatus, setAssigned } = this.props //actions
 
     const selectedCount = items.filter(f => f.selected).length
     const noneSelected = selectedCount <= 0
     const allSelected = items.length === selectedCount
     const allChecked = !noneSelected && allSelected
 
-    const markAs = (value) => updateIssues(items, 'resolved', value, value)
+    const markAs = (value) => updateIssues(items, 'status', value, value)
     const assignTo = (id, editor) => updateIssues(items, 'assignee', id, editor)
 
     return (
@@ -29,8 +30,8 @@ export default class IssueHeader extends React.Component {
           <th colSpan={4} className="toolbar-cell">
             {noneSelected ? null :
                 <ActiveMenu id="mark-as-menu" title="Mark As" values={[
-                  [() => markAs(true), 'Resolved'],
-                  [() => markAs(false), 'Unresolved']
+                  [() => markAs(1), 'Resolved'],
+                  [() => markAs(0), 'Unresolved']
               ]}/>}
 
             {noneSelected ? null :
@@ -45,16 +46,13 @@ export default class IssueHeader extends React.Component {
             {/** Display when no items selected */}
 
             {!noneSelected ? null :
-                <ActiveMenu id="filter-menu" title={filter} values={[
-                  [() => setFilter(Filter.ALL), Filter.ALL],
-                  [() => setFilter(Filter.NEW), Filter.NEW],
-                  [() => setFilter(Filter.UNASSIGNED), Filter.UNASSIGNED],
-                  [() => setFilter(Filter.UNRESOLVED), Filter.UNRESOLVED],
-                  [() => setFilter(Filter.RESOLVED), Filter.RESOLVED]
+                <ActiveMenu id="status-menu" title={Status[status] || 'All Issues'} values={[
+                  [() => setStatus(null), 'All Issues'],
+                  ...Status.map((s, i) => [() => setStatus(i), s])
               ]}/>}
 
             {!noneSelected ? null :
-                <ActiveMenu id="assigned-menu" title={assignedTo.username || 'Assigned To'} values={[
+                <ActiveMenu id="assigned-menu" title={assignedTo ? assignedTo.username : 'Assigned To'} values={[
                   [() => setAssigned(''), 'Everyone'],
                   ...editors.map((e) => [() => setAssigned(e), e.username])
               ]}/>}

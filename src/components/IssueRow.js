@@ -1,5 +1,6 @@
 import React from 'react'
 import { Roles } from 'actions/authActions'
+import { Status } from 'actions/issueActions'
 import Util from 'util/util'
 import ActivityList from 'components/ActivityList'
 
@@ -11,7 +12,7 @@ export default class IssueRow extends React.Component {
 
   render() {
     const {issue, showDetails, createVote, userId} = this.props
-    const resolved = issue.resolved ? 'Resolved' : issue.assignee === null ? 'New' : 'Unresolved'
+    const status = Status[issue.status]
     const checkAllFn = (e) => this.handleSelection(e, issue._id)
     const summary = `Created ${Util.timeFromNow(issue.createdAt)} by ${issue.creatorName}`
 
@@ -23,8 +24,8 @@ export default class IssueRow extends React.Component {
           </td>
 
           <td className="status-cell">
-            <div className={`status-${resolved.toLowerCase()}`}>
-              {resolved}
+            <div className={`status-${status ? status.toLowerCase() : ''}`}>
+              {status}
             </div>
             <div className="assignee">
               {issue.assignee ? Util.capitalise(issue.assignee.username) : 'Unassigned'}

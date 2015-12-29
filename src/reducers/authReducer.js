@@ -5,17 +5,19 @@ export default function auth(state = {
   username: null,
   token: null,
   role: 0,
-  editors: []
+  editors: [],
+  perPage: 10
 }, action) {
   const update = (obj) => Object.assign({}, state, obj)
 
   switch (action.type) {
 
     case SAVE_DETAILS:
-      const { user_id, username, access_token, role } = action.hash
+      const { user_id, username, access_token, role, settings } = action.hash
       return {
         userId: user_id,
         editors: state.editors,
+        perPage: 10,
         username,
         token: access_token,
         role
