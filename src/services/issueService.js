@@ -3,14 +3,14 @@ import BaseService from 'services/baseService'
 
 export default class IssueService extends BaseService {
 
-  static getIssues(token, page = 1, perPage = 10, assignee, status) {
+  static getIssues(token, page = 1, perPage = 10, assignee, status, search) {
     let url = `/issues?page=${page}&perPage=${perPage}`
     url += (assignee != null) ? `&assignee=${assignee}` : ''
     url += (status != null) ? `&status=${status}` : ''
+    url += (search != null) ? `&search=${search}` : ''
 
     return fetch(url, {headers: this.headers(token)})
         .then(response => response.json())
-        .then(json => json.issues)
   }
 
   static patchIssues(issues, field, value, token) {

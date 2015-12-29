@@ -4,7 +4,6 @@ export default class SearchBox extends React.Component {
 
   handleChange() {
     let query = this.refs.input.value
-    query = (query.length > 1) ? query : null
     this.props.onSearch(query)
   }
 

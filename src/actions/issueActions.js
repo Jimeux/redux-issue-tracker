@@ -65,9 +65,10 @@ function getIssues(dispatch, state, reset) {
 
   const assignee = (state.issues.assignedTo != null) ? state.issues.assignedTo._id : null
   const status = (state.issues.status != null) ? state.issues.status : null
+  const search = (state.issues.query != null) ? state.issues.query : null
   const perPage = state.auth.perPage
 
-  IssueService.getIssues(state.auth.token, state.issues.page, perPage, assignee, status)
+  IssueService.getIssues(state.auth.token, state.issues.page, perPage, assignee, status, search)
       .then(issues => dispatch({type: RECEIVE_ISSUES, issues, reset}))
       .catch(error => dispatch({type: SET_ALERT, message: `Couldn't get issues`}))
 }
@@ -111,7 +112,11 @@ export function sort(order) {
 }
 
 export function search(query) {
-  return {type: SEARCH, query}
+  return (dispatch, getState) => {
+    dispatch({type: SEARCH, query})
+    if (query.length > 2)
+      getIssues(dispatch, getState(), true)
+  }
 }
 
 export function selectIssue(id, checked) {

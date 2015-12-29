@@ -90,13 +90,7 @@ export default function issues(state = initialState, action) {
       return updateState({assignedTo: action.assignee})
 
     case SEARCH:
-      return updateState({
-        query: action.query,
-        items: items.map(i => {
-          i.selected = false
-          return i
-        })
-      })
+      return updateState({query: action.query})
 
     default:
       return state
@@ -142,20 +136,6 @@ export default function issues(state = initialState, action) {
 }
 
 export function selectIssues(state, perPage = 10) {
-  let { items, query, page } = state
-
-  const start = page * perPage - perPage
-
-  if (query !== null) {
-    query = query.toUpperCase()
-    items = items.filter((i) => {
-      return i.title.toUpperCase().includes(query) ||
-          (!i.assignee && Status[0].includes(query)) ||
-          (i.assignee && i.assignee.username.toUpperCase().includes(query))
-    })
-  }
-
-  items = items.slice(start, start + perPage)
-
-  return items
+  const start = (state.page * perPage) - perPage
+  return state.items.slice(start, start + perPage)
 }

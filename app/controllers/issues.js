@@ -29,6 +29,14 @@ function index(req, res) {
     query = Object.assign({assignee: req.query.assignee}, query)
   if (req.query.status)
     query = Object.assign({status: parseInt(req.query.status)}, query)
+  if (req.query.search) {
+    const term = new RegExp(req.query.search, 'i')
+    query = Object.assign(
+        {$or: [{title: term}, {description: term}]},
+        query)
+  }
+
+  console.log(query)
 
   Issue
       .find(query)
@@ -41,7 +49,7 @@ function index(req, res) {
           res.sendStatus(500)
         else {
           issues = issues.map((i) => Issue.jsonFormat(i, req.user))
-          res.json({issues})
+          res.json(issues)
         }
       })
 }
