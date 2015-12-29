@@ -83,7 +83,7 @@ function batchUpdate(req, res) {
     taggedUser = value
   } else if (field === 'status') {
     type = Activity.Types.CHANGED_STATUS
-    content = Issue.Status[value]
+    content = value
   }
 
   const activity = {user, content, type, taggedUser}

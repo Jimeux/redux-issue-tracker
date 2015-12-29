@@ -1,5 +1,6 @@
 import React from 'react'
 import { Roles } from 'actions/authActions'
+import { Status } from 'actions/issueActions'
 import Util from 'util/util'
 
 const Types = { //TODO: Share with server code
@@ -20,7 +21,6 @@ export default class ActivityList extends React.Component {
     const type = Util.capitalise(a.type)
     const user = Util.capitalise(a.user.username)
     const createdAt = Util.timeFromNow(a.createdAt)
-    const taggedUser = Util.capitalise(a.taggedUser ? a.taggedUser.username : '')
     const key = `act-${this.props.issue._id}${a.createdAt}${user}`
 
     switch (activity.type) {
@@ -32,13 +32,15 @@ export default class ActivityList extends React.Component {
             </li>
         )
       case Types.ASSIGNED_TO:
+        const taggedUser = Util.capitalise(a.taggedUser ? a.taggedUser.username : '')
         return (
             <li key={key}>{type} <a>{taggedUser}</a> by <a>{user}</a> {createdAt}</li>
         )
       case Types.CHANGED_STATUS:
+        const status = Status[a.content]
         return (
             <li key={key}>
-              {type} <span className={`status-${a.content} status-sm`}>{a.content}</span> by
+              {type} <span className={`status-${status ? status.toLowerCase() : ''} status-sm`}>{status}</span> by
               <a> {user}</a> {createdAt}
             </li>
         )

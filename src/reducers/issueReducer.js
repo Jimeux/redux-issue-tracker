@@ -52,7 +52,8 @@ export default function issues(state = initialState, action) {
     case RECEIVE_ISSUES:
       return updateState({
         isFetching: false,
-        items: [...items, ...action.issues]
+        items: action.reset ? action.issues : [...items, ...action.issues],
+        page: action.reset ? 1 : page
       })
 
     case SELECT_ISSUE:
@@ -83,18 +84,10 @@ export default function issues(state = initialState, action) {
       })
 
     case SET_STATUS:
-      return updateState({
-        status: action.status,
-        page: 1,
-        items: []
-      })
+      return updateState({status: action.status})
 
     case SET_ASSIGNED:
-      return updateState({
-        assignedTo: action.assignee,
-        page: 1,
-        items: []
-      })
+      return updateState({assignedTo: action.assignee})
 
     case SEARCH:
       return updateState({

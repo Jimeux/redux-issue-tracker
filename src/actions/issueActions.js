@@ -33,14 +33,14 @@ export const Status = [
 export function setStatus(status) {
   return (dispatch, getState) => {
     dispatch({type: SET_STATUS, status})
-    getIssues(dispatch, getState())
+    getIssues(dispatch, getState(), true)
   }
 }
 
 export function setAssigned(assignee) {
   return (dispatch, getState) => {
     dispatch({type: SET_ASSIGNED, assignee})
-    getIssues(dispatch, getState())
+    getIssues(dispatch, getState(), true)
   }
 }
 
@@ -56,11 +56,11 @@ export function pageUp() {
     const page = getState().issues.page
 
     if (getState().issues.items.length <= page * perPage - perPage)
-      getIssues(dispatch, getState())
+      getIssues(dispatch, getState(), false)
   }
 }
 
-function getIssues(dispatch, state) {
+function getIssues(dispatch, state, reset) {
   dispatch({type: REQUEST_ISSUES})
 
   const assignee = (state.issues.assignedTo != null) ? state.issues.assignedTo._id : null
@@ -68,7 +68,7 @@ function getIssues(dispatch, state) {
   const perPage = state.auth.perPage
 
   IssueService.getIssues(state.auth.token, state.issues.page, perPage, assignee, status)
-      .then(issues => dispatch({type: RECEIVE_ISSUES, issues}))
+      .then(issues => dispatch({type: RECEIVE_ISSUES, issues, reset}))
       .catch(error => dispatch({type: SET_ALERT, message: `Couldn't get issues`}))
 }
 
