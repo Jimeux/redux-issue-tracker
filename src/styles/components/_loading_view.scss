@@ -3,15 +3,13 @@
 
 .loading-view {
   position: absolute;
-  width: 350px;
-  height: 200px;
-  color: $colorGrey700;
-  margin-top: 30%;
-  padding-top: 30%;
+  width: 100%;
+  height: 100%;
+  padding-top: 30px;
   text-align: center;
+  color: white;
   top: 0;
   left: 0;
-  background: white;
   border: $colorBlue500;
   z-index: 999;
 }

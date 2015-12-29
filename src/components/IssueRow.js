@@ -37,14 +37,9 @@ export default class IssueRow extends React.Component {
             <div>{summary}</div>
           </td>
 
-          <td className="vote-cell">
-            <ActiveButton onClick={() => createVote(issue._id)}
-                          label="+1"
-                          active={issue.votes.includes(userId)}/>
-            <button className="btn btn-xs btn-default btn-block btn-count">
-              {issue.votes.length}
-            </button>
-          </td>
+          <VoteCell onClick={() => createVote(issue._id)}
+                    active={issue.votes.includes(userId)}
+                    votes={issue.votes.length}/>
         </tr>
 
         <ActivityList issue={issue}/>
@@ -54,7 +49,7 @@ export default class IssueRow extends React.Component {
   }
 }
 
-class ActiveButton extends React.Component {
+class VoteCell extends React.Component {
 
   handleClick() {
     this.props.onClick()
@@ -64,9 +59,16 @@ class ActiveButton extends React.Component {
   render() {
     const active = this.props.active ? 'active' : ''
 
-    return <button className={`btn-plus-one btn btn-default btn-xs ${active}`}
-                   ref="btn" onClick={() => this.handleClick()}>
-      {this.props.label}
-    </button>
+    return (
+        <td className="vote-cell">
+          <button className={`btn-plus-one btn btn-default btn-xs ${active}`}
+                  ref="btn" onClick={() => this.handleClick()}>
+            +1
+          </button>
+          <button className="btn btn-xs btn-default btn-block btn-count">
+            {this.props.votes}
+          </button>
+        </td>
+    )
   }
 }

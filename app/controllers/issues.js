@@ -31,12 +31,8 @@ function index(req, res) {
     query = Object.assign({status: parseInt(req.query.status)}, query)
   if (req.query.search) {
     const term = new RegExp(req.query.search, 'i')
-    query = Object.assign(
-        {$or: [{title: term}, {description: term}]},
-        query)
+    query = Object.assign(query, {title: term})//{$or: [{title: term, desc: term}]})
   }
-
-  console.log(query)
 
   Issue
       .find(query)

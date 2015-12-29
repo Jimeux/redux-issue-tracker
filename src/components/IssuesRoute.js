@@ -34,15 +34,16 @@ class IssuesRoute extends React.Component {
         </div>
     )
 
+        /*<ReactCSSTransitionGroup transitionName="table"
+    transitionAppear={true} transitionAppearTimeout={500}
+    transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+        {body}
+  </ReactCSSTransitionGroup>*/
+
     return (
         <div>
           {issueState.isFetching ? <LoadingView /> : null}
-          {issueState.items.length > 0 && issueState.page != 1 ? body :
-              <ReactCSSTransitionGroup transitionName="table"
-                                       transitionAppear={true} transitionAppearTimeout={500}
-                                       transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-                {body}
-              </ReactCSSTransitionGroup>}
+          {body}
         </div>
     )
   }
