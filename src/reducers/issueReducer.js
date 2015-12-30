@@ -1,7 +1,7 @@
 import {
     ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DETAILS, UPDATE_SINGLE, UPDATE_MANY,
     SORT, SEARCH, SELECT_ALL, SELECT_ISSUE, PAGE_UP, PAGE_DOWN,
-    Status, SET_STATUS, SET_ASSIGNED
+    Status, SET_STATUS, SET_ASSIGNED, CLEAR_FILTERS
 } from 'actions/issueActions'
 
 const initialState = {
@@ -11,7 +11,8 @@ const initialState = {
   items: [],
   query: null,
   status: null,
-  assignedTo: null
+  assignedTo: null,
+  count: 0
 }
 
 export default function issues(state = initialState, action) {
@@ -53,7 +54,8 @@ export default function issues(state = initialState, action) {
       return updateState({
         isFetching: false,
         items: action.reset ? action.issues : [...items, ...action.issues],
-        page: action.reset ? 1 : page
+        page: action.reset ? 1 : page,
+        count: action.count
       })
 
     case SELECT_ISSUE:
@@ -91,6 +93,13 @@ export default function issues(state = initialState, action) {
 
     case SEARCH:
       return updateState({query: action.query})
+
+    case CLEAR_FILTERS:
+      return updateState({
+        query: initialState.query,
+        assignedTo: initialState.assignedTo,
+        status: initialState.status
+      })
 
     default:
       return state

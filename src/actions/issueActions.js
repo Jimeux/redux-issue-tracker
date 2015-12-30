@@ -10,12 +10,15 @@ export const UPDATE_MANY = 'UPDATE_MANY'
 export const REQUEST_ISSUES = 'REQUEST_ISSUES'
 export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
 export const SHOW_DETAILS = 'SHOW_DETAILS'
+
+export const PAGE_UP = 'PAGE_UP'
+export const PAGE_DOWN = 'PAGE_DOWN'
+
 export const SEARCH = 'SEARCH'
 export const SORT = 'SORT'
 export const SET_STATUS = 'SET_STATUS'
 export const SET_ASSIGNED = 'SET_ASSIGNED'
-export const PAGE_UP = 'PAGE_UP'
-export const PAGE_DOWN = 'PAGE_DOWN'
+export const CLEAR_FILTERS = 'CLEAR_FILTERS'
 
 export const Order = {
   DATE: 'createdAt',
@@ -45,12 +48,12 @@ export function setAssigned(assignee) {
 }
 
 export function pageDown() {
-  return {type: PAGE_DOWN }
+  return {type: PAGE_DOWN}
 }
 
 export function pageUp() {
   return (dispatch, getState) => {
-    dispatch({type: PAGE_UP })
+    dispatch({type: PAGE_UP})
 
     const perPage = getState().auth.perPage
     const page = getState().issues.page
@@ -69,7 +72,12 @@ function getIssues(dispatch, state, reset) {
   const perPage = state.auth.perPage
 
   IssueService.getIssues(state.auth.token, state.issues.page, perPage, assignee, status, search)
-      .then(issues => dispatch({type: RECEIVE_ISSUES, issues, reset}))
+      .then(json => dispatch({
+        type: RECEIVE_ISSUES,
+        issues: json.issues,
+        count: json.count,
+        reset
+      }))
       .catch(error => dispatch({type: SET_ALERT, message: `Couldn't get issues`}))
 }
 
@@ -113,8 +121,11 @@ export function sort(order) {
 
 export function search(query) {
   return (dispatch, getState) => {
+    const cleared = getState().issues.query && !query
+
     dispatch({type: SEARCH, query})
-    if (query.length > 2)
+
+    if (cleared || query.length > 2)
       getIssues(dispatch, getState(), true)
   }
 }
@@ -125,4 +136,11 @@ export function selectIssue(id, checked) {
 
 export function selectAll(items, checked) {
   return {type: SELECT_ALL, items, checked}
+}
+
+export function clearFilters() {
+  return (dispatch, getState) => {
+    dispatch({type: CLEAR_FILTERS})
+    getIssues(dispatch, getState())
+  }
 }

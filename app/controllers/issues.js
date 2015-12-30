@@ -44,8 +44,10 @@ function index(req, res) {
         if (err)
           res.sendStatus(500)
         else {
-          issues = issues.map((i) => Issue.jsonFormat(i, req.user))
-          res.json(issues)
+          Issue.count(query).exec((err, count) => {
+            issues = issues.map((i) => Issue.jsonFormat(i, req.user))
+            res.json({issues, count})
+          })
         }
       })
 }
