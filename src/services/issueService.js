@@ -3,11 +3,12 @@ import BaseService from 'services/baseService'
 
 export default class IssueService extends BaseService {
 
-  static getIssues(token, page = 1, perPage = 10, assignee, status, search) {
+  static getIssues(token, page = 1, perPage = 10, assignee, status, search, sortField) {
     let url = `/issues?page=${page}&perPage=${perPage}`
     url += (assignee != null) ? `&assignee=${assignee}` : ''
     url += (status != null) ? `&status=${status}` : ''
     url += (search != null) ? `&search=${search}` : ''
+    url += (sortField != null) ? `&sortField=${sortField}` : ''
 
     return fetch(url, {headers: this.headers(token)})
         .then(response => response.json())

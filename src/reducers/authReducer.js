@@ -6,7 +6,7 @@ export default function auth(state = {
   token: null,
   role: 0,
   editors: [],
-  perPage: 6
+  perPage: 10
 }, action) {
   const update = (obj) => Object.assign({}, state, obj)
 
@@ -17,9 +17,9 @@ export default function auth(state = {
       return {
         userId: user_id,
         editors: state.editors,
-        perPage: 6,
-        username,
+        perPage: 10,
         token: access_token,
+        username,
         role
       }
 

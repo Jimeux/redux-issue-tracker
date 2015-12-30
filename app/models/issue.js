@@ -39,16 +39,24 @@ const IssueSchema = new mongoose.Schema({
     ref: 'User',
     unique: true
   }],
+  voteCount: {
+    type: Number,
+    required: true,
+    default: 0
+  },
   activities: [Activity.schema]
 })
 
 IssueSchema.methods.vote = function (user) {
   const index = this.votes.indexOf(user._id)
 
-  if (index >= 0)
+  if (index >= 0) {
     this.votes.splice(index, 1)
-  else
+    this.voteCount = this.voteCount - 1
+  } else {
     this.votes.push(user._id)
+    this.voteCount = this.voteCount + 1
+  }
 }
 
 IssueSchema.statics.DefaultSelectOpts = [

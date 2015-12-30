@@ -11,7 +11,7 @@ export default class IssueRow extends React.Component {
   }
 
   render() {
-    const {issue, showDetails, createVote, userId} = this.props
+    const {issue, showDetails, createVote, userId, role} = this.props
     const status = Status[issue.status]
     const checkAllFn = (e) => this.handleSelection(e, issue._id)
     const summary = `Created ${Util.timeFromNow(issue.createdAt)} by ${issue.creatorName}`
@@ -20,7 +20,8 @@ export default class IssueRow extends React.Component {
         <tbody className={`issue-row selected-${issue.selected}`}>
         <tr>
           <td className="checkbox-cell">
-            <input onChange={checkAllFn} type="checkbox" checked={!!issue.selected}/>
+            {role < Roles.EDITOR ? null :
+            <input onChange={checkAllFn} type="checkbox" checked={!!issue.selected}/>}
           </td>
 
           <td className="status-cell">
@@ -39,7 +40,7 @@ export default class IssueRow extends React.Component {
 
           <VoteCell onClick={() => createVote(issue._id)}
                     active={issue.votes.includes(userId)}
-                    votes={issue.votes.length}/>
+                    votes={issue.voteCount}/>
         </tr>
 
         <ActivityList issue={issue}/>

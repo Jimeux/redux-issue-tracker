@@ -36,9 +36,10 @@ export function getIssues(dispatch, state, reset) {
   const assignee = (state.filters.assignedTo != null) ? state.filters.assignedTo._id : null
   const status = (state.filters.status != null) ? state.filters.status : null
   const search = (state.filters.query != null) ? state.filters.query : null
+  const sortField = (state.filters.sortField != null) ? state.filters.sortField : null
   const perPage = state.auth.perPage
 
-  IssueService.getIssues(state.auth.token, state.issues.page, perPage, assignee, status, search)
+  IssueService.getIssues(state.auth.token, state.issues.page, perPage, assignee, status, search, sortField)
       .then(json => dispatch({
         type: RECEIVE_ISSUES,
         issues: json.issues,

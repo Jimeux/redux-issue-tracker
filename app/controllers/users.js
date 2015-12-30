@@ -1,11 +1,17 @@
 const router = require('express').Router()
 const passport = require('passport')
 const User = require('../models/user')
+const AccessToken = require('../models/accessToken')
 
-const authenticateBearer = passport.authenticate('bearer', {session: false})
+router.use(passport.authenticate('bearer', {session: false}))
 
-router.get('/editors', authenticateBearer, (req, res) => {
+router.get('/logout', (req, res) => {
+  AccessToken.remove({userId: req.user._id}, (err) => {
+    res.sendStatus(200)
+  })
+})
 
+router.get('/editors', (req, res) => {
   User.where('adminLevel')
       .gte(User.roles().EDITOR)
       .exec((err, users) => {

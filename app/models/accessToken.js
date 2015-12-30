@@ -1,6 +1,6 @@
 const config = require('../config')
 const mongoose = require('mongoose')
-const utils = require("../utils")
+const utils = require('../utils')
 
 var AccessTokenSchema = new mongoose.Schema({
   token: {
@@ -13,9 +13,9 @@ var AccessTokenSchema = new mongoose.Schema({
     required: true
   },
   userId: {
-    type: String, //TODO: Make reference to User model
-    required: true,
-    unique: true
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
   },
   scope: {
     type: String,

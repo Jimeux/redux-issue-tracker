@@ -17,4 +17,9 @@ export default class UserService extends BaseService {
     return fetch('/oauth/token', options)
   }
 
+  static logout(token) {
+    const options = { headers: this.headers(token) }
+    return fetch('/users/logout', options)
+  }
+
 }

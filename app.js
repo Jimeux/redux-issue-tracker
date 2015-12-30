@@ -12,7 +12,6 @@ const oauth2 = require('./app/oauth2')
 
 /* Controllers */
 const issues = require('./app/controllers/issues')
-const sessions = require('./app/controllers/sessions')
 const users = require('./app/controllers/users')
 
 const app = express()
@@ -63,7 +62,6 @@ app.get('/', (req, res) => {
 })
 app.use('/issues', issues)
 app.use('/users', users)
-app.use('/sessions', sessions)
 app.post('/oauth/token', oauth2.token)
 
 // catch 404 and forward to error handler

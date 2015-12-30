@@ -12,10 +12,10 @@ router.use(passport.authenticate('bearer', {session: false}))
 router.route('/')
     .get(index)
     .post(create)
-    .patch(batchUpdate)
 
-router.route('/:id')
+router.route('/')
     .all(isEditor)
+    .patch(batchUpdate)
 
 router.route('/:id/plusone')
     .post(plusOne)
@@ -24,6 +24,7 @@ function index(req, res) {
 
   const perPage = req.query.perPage || 10
   let query = {}
+  let sortField = (req.query.sortField) ? req.query.sortField : 'createdAt'
 
   if (req.query.assignee)
     query = Object.assign({assignee: req.query.assignee}, query)
@@ -37,7 +38,7 @@ function index(req, res) {
   Issue
       .find(query)
       .populate(Issue.DefaultSelectOpts)
-      .sort('-createdAt')
+      .sort('-' + sortField)
       .skip((req.query.page * perPage) - perPage)
       .limit(perPage)
       .exec((err, issues) => {

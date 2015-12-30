@@ -28,7 +28,7 @@
     text-align: center;
   }
 
-  .status-resolved, .status-unresolved, .status-new {
+  .status-resolved, .status-open, .status-new {
     font-size: 85%;
     color: white;
     width: 100%;
@@ -41,8 +41,8 @@
   .status-resolved {
     background: $colorGreen400;
   }
-  .status-unresolved {
-    background: $colorRed400;
+  .status-open {
+    background: $colorBlue400;
   }
   .status-new {
     background: $colorBlue400;

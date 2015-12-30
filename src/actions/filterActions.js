@@ -8,14 +8,11 @@ export const CLEAR_FILTERS = 'CLEAR_FILTERS'
 
 export const Order = {
   DATE: 'createdAt',
-  TITLE: 'title',
-  ASSIGNEE: 'assigneeName',
-  STATUS: 'resolved',
   VOTES: 'voteCount'
 }
 
 export const Status = [
-  'Unresolved',
+  'Open',
   'Resolved'
 ]
 
@@ -33,8 +30,11 @@ export function setAssigned(assignee) {
   }
 }
 
-export function sort(order) {
-  return {type: SORT, order}
+export function sort(sortField) {
+  return (dispatch, getState) => {
+    dispatch({type: SORT, sortField})
+    getIssues(dispatch, getState(), true)
+  }
 }
 
 export function search(query) {

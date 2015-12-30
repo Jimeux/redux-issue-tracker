@@ -13,8 +13,7 @@ export default class Menu extends React.Component {
               <span className="user">Logged in as James</span>
               <ul>
                 <li>My Issues</li>
-                <li>Profile</li>
-                <li>Log out</li>
+                <li onClick={() => this.props.logout()}>Log out</li>
               </ul>
             </div>
           </div>
