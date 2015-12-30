@@ -8,9 +8,10 @@ import IssueEmpty from 'components/IssueEmpty'
 export default class IssueTable extends React.Component {
 
   render() {
-    const { issueState, issueActions, authState } = this.props
+    const { issueState, issueActions, authState, filterActions, filterState } = this.props
 
-    const { pageUp, pageDown, clearFilters } = this.props.issueActions
+    const { pageUp, pageDown } = this.props.issueActions
+    const { clearFilters } = this.props.filterActions
 
     const rows = issueState.items.map((i) =>
         <IssueRow {...issueActions} {...authState} key={i._id} issue={i}/>)
@@ -18,7 +19,7 @@ export default class IssueTable extends React.Component {
 
     return (
         <table className="issue-table">
-          <IssueHeader {...issueState} {...issueActions} {...authState}/>
+          <IssueHeader {...issueState} {...issueActions} {...filterState} {...filterActions} {...authState}/>
           {rows}
           {emptyMsg}
           {issueState.count <= 0 ? null :

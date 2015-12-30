@@ -1,22 +1,17 @@
 import {
-    ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DETAILS, UPDATE_SINGLE, UPDATE_MANY,
-    SORT, SEARCH, SELECT_ALL, SELECT_ISSUE, PAGE_UP, PAGE_DOWN,
-    Status, SET_STATUS, SET_ASSIGNED, CLEAR_FILTERS
+    ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DETAILS,
+    UPDATE_SINGLE, UPDATE_MANY, SELECT_ALL, SELECT_ISSUE, PAGE_UP, PAGE_DOWN
 } from 'actions/issueActions'
 
 const initialState = {
   isFetching: true,
   page: 1,
-  descending: true,
   items: [],
-  query: null,
-  status: null,
-  assignedTo: null,
   count: 0
 }
 
 export default function issues(state = initialState, action) {
-  const { descending, items, page } = state
+  const { items, page } = state
 
   switch (action.type) {
 
@@ -36,15 +31,21 @@ export default function issues(state = initialState, action) {
       return updateState({items: [action.issue, ...items]})
 
     case PAGE_UP:
-      return updateState({page: page + 1})
+      return updateState({
+        page: page + 1,
+        items: items.map(i => {
+          i.selected = false
+          return i
+        })
+      })
 
     case PAGE_DOWN:
-      return updateState({page: page > 1 ? page - 1 : 1})
-
-    case SORT:
       return updateState({
-        items: items.sort(sortIssues(action.order, descending)),
-        descending: !descending
+        page: page > 1 ? page - 1 : 1,
+        items: items.map(i => {
+          i.selected = false
+          return i
+        })
       })
 
     case REQUEST_ISSUES:
@@ -85,22 +86,6 @@ export default function issues(state = initialState, action) {
         })
       })
 
-    case SET_STATUS:
-      return updateState({status: action.status})
-
-    case SET_ASSIGNED:
-      return updateState({assignedTo: action.assignee})
-
-    case SEARCH:
-      return updateState({query: action.query})
-
-    case CLEAR_FILTERS:
-      return updateState({
-        query: initialState.query,
-        assignedTo: initialState.assignedTo,
-        status: initialState.status
-      })
-
     default:
       return state
   }
@@ -125,22 +110,6 @@ export default function issues(state = initialState, action) {
       Object.assign({}, issue, updates),
       ...items.slice(index + 1)
     ]
-  }
-
-  function sortIssues(field, descending) {
-    return (a, b) => {
-      if (descending) [a, b] = [b, a]
-
-      a = a[field]
-      b = b[field]
-
-      if (a instanceof String) {
-        a = a.toUpperCase()
-        b = b.toUpperCase()
-      }
-
-      return (a < b) ? -1 : (a > b) ? 1 : 0
-    }
   }
 }
 

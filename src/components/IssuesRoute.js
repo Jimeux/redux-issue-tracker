@@ -11,6 +11,7 @@ import IssueForm from 'components/IssueForm'
 import { fetchEditors, Roles } from 'actions/authActions'
 import { selectIssues } from 'reducers/issueReducer'
 import * as IssueActionCreators from 'actions/issueActions'
+import * as FilterActionCreators from 'actions/filterActions'
 import * as IssueFormActionCreators from 'actions/issueFormActions'
 
 class IssuesRoute extends React.Component {
@@ -22,9 +23,9 @@ class IssuesRoute extends React.Component {
   }
 
   render() {
-    const { issueFormState, issueState, authState } = this.props
-    const { issueActions, issueFormActions, fetchEditors } = this.props
-    const issueTableProps = {issueActions, issueState, authState, fetchEditors}
+    const { issueFormState, issueState, filterState, authState } = this.props
+    const { issueActions, filterActions, issueFormActions, fetchEditors } = this.props
+    const issueTableProps = {issueActions, issueState, filterState, filterActions, authState, fetchEditors}
 
     const body = (
         <div>
@@ -54,6 +55,7 @@ function mapStateToProps(state) {
   return {
     issueState: Object.assign({}, state.issues, selected),
     issueFormState: state.issueForm,
+    filterState: state.filters,
     authState: state.auth
   }
 }
@@ -61,6 +63,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     issueActions: bindActionCreators(IssueActionCreators, dispatch),
+    filterActions: bindActionCreators(FilterActionCreators, dispatch),
     issueFormActions: bindActionCreators(IssueFormActionCreators, dispatch),
     fetchEditors: () => dispatch(fetchEditors())
   }

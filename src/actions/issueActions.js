@@ -14,39 +14,6 @@ export const SHOW_DETAILS = 'SHOW_DETAILS'
 export const PAGE_UP = 'PAGE_UP'
 export const PAGE_DOWN = 'PAGE_DOWN'
 
-export const SEARCH = 'SEARCH'
-export const SORT = 'SORT'
-export const SET_STATUS = 'SET_STATUS'
-export const SET_ASSIGNED = 'SET_ASSIGNED'
-export const CLEAR_FILTERS = 'CLEAR_FILTERS'
-
-export const Order = {
-  DATE: 'createdAt',
-  TITLE: 'title',
-  ASSIGNEE: 'assigneeName',
-  STATUS: 'resolved',
-  VOTES: 'voteCount'
-}
-
-export const Status = [
-  'Unresolved',
-  'Resolved'
-]
-
-export function setStatus(status) {
-  return (dispatch, getState) => {
-    dispatch({type: SET_STATUS, status})
-    getIssues(dispatch, getState(), true)
-  }
-}
-
-export function setAssigned(assignee) {
-  return (dispatch, getState) => {
-    dispatch({type: SET_ASSIGNED, assignee})
-    getIssues(dispatch, getState(), true)
-  }
-}
-
 export function pageDown() {
   return {type: PAGE_DOWN}
 }
@@ -63,12 +30,12 @@ export function pageUp() {
   }
 }
 
-function getIssues(dispatch, state, reset) {
+export function getIssues(dispatch, state, reset) {
   dispatch({type: REQUEST_ISSUES})
 
-  const assignee = (state.issues.assignedTo != null) ? state.issues.assignedTo._id : null
-  const status = (state.issues.status != null) ? state.issues.status : null
-  const search = (state.issues.query != null) ? state.issues.query : null
+  const assignee = (state.filters.assignedTo != null) ? state.filters.assignedTo._id : null
+  const status = (state.filters.status != null) ? state.filters.status : null
+  const search = (state.filters.query != null) ? state.filters.query : null
   const perPage = state.auth.perPage
 
   IssueService.getIssues(state.auth.token, state.issues.page, perPage, assignee, status, search)
@@ -115,32 +82,10 @@ export function showDetails(issueId, show) {
   return {type: SHOW_DETAILS, issueId, show}
 }
 
-export function sort(order) {
-  return {type: SORT, order}
-}
-
-export function search(query) {
-  return (dispatch, getState) => {
-    const cleared = getState().issues.query && !query
-
-    dispatch({type: SEARCH, query})
-
-    if (cleared || query.length > 2)
-      getIssues(dispatch, getState(), true)
-  }
-}
-
 export function selectIssue(id, checked) {
   return {type: SELECT_ISSUE, id, checked}
 }
 
 export function selectAll(items, checked) {
   return {type: SELECT_ALL, items, checked}
-}
-
-export function clearFilters() {
-  return (dispatch, getState) => {
-    dispatch({type: CLEAR_FILTERS})
-    getIssues(dispatch, getState())
-  }
 }

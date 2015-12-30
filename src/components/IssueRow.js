@@ -1,6 +1,6 @@
 import React from 'react'
 import { Roles } from 'actions/authActions'
-import { Status } from 'actions/issueActions'
+import { Status } from 'actions/filterActions'
 import Util from 'util/util'
 import ActivityList from 'components/ActivityList'
 

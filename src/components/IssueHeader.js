@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchBox from 'components/SearchBox'
-import { Status, Order } from 'actions/issueActions'
+import { Status, Order } from 'actions/filterActions'
 
 //TODO: Split this up into Edit and Filter components
 export default class IssueHeader extends React.Component {

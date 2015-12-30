@@ -9,9 +9,10 @@ import issueForm from 'reducers/issueFormReducer'
 import loginForm from 'reducers/loginFormReducer'
 import alert from 'reducers/alertReducer'
 import menu from 'reducers/menuReducer'
+import filters from 'reducers/filterReducer'
 
 const rootReducer = combineReducers({
-  issues, auth, issueForm, loginForm, alert, menu,
+  issues, auth, issueForm, loginForm, alert, menu, filters,
   routing: routeReducer
 })
 
