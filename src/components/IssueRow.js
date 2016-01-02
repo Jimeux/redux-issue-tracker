@@ -1,6 +1,6 @@
 import React from 'react'
 import { Roles } from 'actions/authActions'
-import { Status } from 'actions/filterActions'
+import { Status } from 'constants'//'status/constants'
 import Util from 'util/util'
 import ActivityList from 'components/ActivityList'
 
@@ -17,8 +17,8 @@ export default class IssueRow extends React.Component {
     const summary = `Created ${Util.timeFromNow(issue.createdAt)} by ${issue.creatorName}`
 
     return (
-        <tbody className={`issue-row selected-${issue.selected}`}>
-        <tr>
+        <tbody className={`issue-row selected-${issue.selected} ${issue.showDetails ? 'expanded' : ''}`}>
+        <tr className={`${issue.showDetails ? 'expanded' : ''}`}>
           <td className="checkbox-cell">
             {role < Roles.EDITOR ? null :
             <input onChange={checkAllFn} type="checkbox" checked={!!issue.selected}/>}

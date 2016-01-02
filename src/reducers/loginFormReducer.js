@@ -2,6 +2,7 @@ import {
     UPDATE_LOGIN_VALUE, SUBMIT_LOGIN_FORM, UPDATE_LOGIN_ERRORS,
     RESET_LOGIN_FORM, LOGIN_SUBMIT_COMPLETE
 } from 'actions/loginFormActions'
+import { RESET } from 'store/store'
 
 const initialState = {
   values: {
@@ -42,6 +43,9 @@ export default function loginForm(state = initialState, action) {
       return updateState({submitting: false})
 
     case RESET_LOGIN_FORM:
+      return initialState
+
+    case RESET:
       return initialState
 
     default:

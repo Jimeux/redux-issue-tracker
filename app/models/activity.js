@@ -1,12 +1,6 @@
 const mongoose = require('mongoose')
 const User     = require('./user')
-
-const Types = {
-  CREATED: 'created',
-  COMMENTED: 'commented',
-  ASSIGNED_TO: 'assigned to',
-  CHANGED_STATUS: 'status changed to'
-}
+const Types = require('../../shared/constants').Types
 
 const keys = Object.keys(Types)
 const acceptedValues = keys.map(key => Types[key])

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const User = require('./user')
 const Activity = require('./activity')
+const Status = require('../../shared/constants').Status
 const util = require('../utils')
 
 const IssueSchema = new mongoose.Schema({
@@ -67,11 +68,7 @@ IssueSchema.statics.DefaultSelectOpts = [
   {path: 'activities.taggedUser', select: '_id username'}
 ]
 
-IssueSchema.statics.Status = [
-  'Unresolved',
-  'Resolved',
-  'Inappropriate' //TODO
-]
+IssueSchema.statics.Status = Status
 
 IssueSchema.statics.jsonFormat = function (issue, user) {
   issue = issue.toJSON()

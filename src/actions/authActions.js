@@ -25,6 +25,7 @@ export function logout() {
   return (dispatch, getState) => {
     UserService.logout(getState().auth.token)
       .catch(error => dispatch({type: SET_ALERT, message: `Error logging out`}))
+    dispatch({type: 'RESET'})
     dispatch(replacePath('/login'))
   }
 }

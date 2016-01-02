@@ -2,6 +2,7 @@ import {
     ADD_ISSUE, ADD_ISSUE_ERROR, REQUEST_ISSUES, RECEIVE_ISSUES, SHOW_DETAILS,
     UPDATE_SINGLE, UPDATE_MANY, SELECT_ALL, SELECT_ISSUE, PAGE_UP, PAGE_DOWN
 } from 'actions/issueActions'
+import { RESET } from 'store/store'
 
 const initialState = {
   isFetching: true,
@@ -85,6 +86,9 @@ export default function issues(state = initialState, action) {
           return i
         })
       })
+
+    case RESET:
+      return initialState
 
     default:
       return state

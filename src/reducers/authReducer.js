@@ -1,13 +1,17 @@
-import { SAVE_DETAILS, RECEIVE_EDITORS } from 'actions/authActions'
+import { SAVE_DETAILS, RECEIVE_EDITORS, Roles } from 'actions/authActions'
+import { RESET } from 'store/store'
+import Util from 'util/util'
 
-export default function auth(state = {
+const initialState = {
   userId: null,
   username: null,
   token: null,
   role: 0,
   editors: [],
   perPage: 10
-}, action) {
+}
+
+export default function auth(state = initialState, action) {
   const update = (obj) => Object.assign({}, state, obj)
 
   switch (action.type) {
@@ -19,12 +23,16 @@ export default function auth(state = {
         editors: state.editors,
         perPage: 10,
         token: access_token,
-        username,
+        isEditor: role >= Roles.EDITOR,
+        username: Util.capitalise(username),
         role
       }
 
     case RECEIVE_EDITORS:
       return update({editors: action.editors})
+
+    case RESET:
+      return initialState
 
     default:
       return state

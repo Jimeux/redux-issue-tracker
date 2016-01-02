@@ -1,6 +1,6 @@
-import {
-    SORT, SEARCH, Status, SET_STATUS, SET_ASSIGNED, CLEAR_FILTERS
-} from 'actions/filterActions'
+import { Status } from 'constants'//'shared/constants'
+import { SORT, SEARCH, SET_STATUS, SET_ASSIGNED, CLEAR_FILTERS } from 'actions/filterActions'
+import { RESET } from 'store/store'
 
 const initialState = {
   descending: true,
@@ -31,6 +31,9 @@ export default function filters(state = initialState, action) {
         assignedTo: initialState.assignedTo,
         status: initialState.status
       })
+
+    case RESET:
+      return initialState
 
     default:
       return state

@@ -36,7 +36,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
-          <IndexRoute components={IssuesRoute} onEnter={authenticate}/>
+          <IndexRoute component={IssuesRoute} onEnter={authenticate}/>
           <Route path="/login" component={LoginForm}/>
         </Route>
       </Router>

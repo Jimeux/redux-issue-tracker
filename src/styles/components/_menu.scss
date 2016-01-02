@@ -69,10 +69,10 @@
 
 .menu-enter.menu-enter-active, .menu-appear.menu-appear-active {
   background: rgba(0, 0, 0, 0.2);
-  transition: background 200ms ease-in;
+  transition: background 150ms ease-in;
   .menu {
     transform: none;
-    transition: transform 200ms ease-in;
+    transition: transform 150ms ease-in;
   }
 }
 
@@ -83,9 +83,9 @@
 
 .menu-leave.menu-leave-active {
   background: rgba(0, 0, 0, 0.0);
-  transition: background 200ms ease-out;
+  transition: background 150ms ease-out;
   .menu {
     transform: translateX(-280px);
-    transition: transform 250ms ease-out;
+    transition: transform 150ms ease-out;
   }
 }

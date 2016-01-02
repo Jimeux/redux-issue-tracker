@@ -1,6 +1,7 @@
 import {
     UPDATE_VALUE, SUBMIT_FORM, SUBMISSION_COMPLETED, UPDATE_ERRORS, RESET_FORM
 } from 'actions/issueFormActions'
+import { RESET } from 'store/store'
 
 const initialState = {
   values: {
@@ -45,6 +46,9 @@ export default function issueForm(state = initialState, action) {
       return initialState
 
     case RESET_FORM:
+      return initialState
+
+    case RESET:
       return initialState
 
     default:

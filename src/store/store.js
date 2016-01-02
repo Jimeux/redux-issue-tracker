@@ -23,4 +23,6 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const store = createStoreWithMiddleware(rootReducer)
 
+export const RESET = 'RESET'
+
 export default store

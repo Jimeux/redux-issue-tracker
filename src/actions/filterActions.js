@@ -1,4 +1,6 @@
 import { getIssues } from 'actions/issueActions'
+import { closeMenu } from 'actions/menuActions'
+import { Status } from 'constants'//'shared/constants'
 
 export const SEARCH = 'SEARCH'
 export const SORT = 'SORT'
@@ -11,11 +13,6 @@ export const Order = {
   VOTES: 'voteCount'
 }
 
-export const Status = [
-  'Open',
-  'Resolved'
-]
-
 export function setStatus(status) {
   return (dispatch, getState) => {
     dispatch({type: SET_STATUS, status})
@@ -26,6 +23,7 @@ export function setStatus(status) {
 export function setAssigned(assignee) {
   return (dispatch, getState) => {
     dispatch({type: SET_ASSIGNED, assignee})
+    dispatch(closeMenu())
     getIssues(dispatch, getState(), true)
   }
 }

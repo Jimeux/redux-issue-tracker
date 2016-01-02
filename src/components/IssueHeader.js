@@ -1,7 +1,8 @@
 import React from 'react'
 import SearchBox from 'components/SearchBox'
 import { Roles } from 'actions/authActions'
-import { Status, Order } from 'actions/filterActions'
+import { Status } from 'constants'//'shared/constants'
+import { Order } from 'actions/filterActions'
 
 export default class IssueHeader extends React.Component {
   render() {
@@ -67,7 +68,7 @@ class FilterBar extends React.Component {
               ]}/>
 
           <ActiveMenu id="assigned-menu" title={assignedTo ? assignedTo.username : 'Assigned To'} values={[
-                  [() => setAssigned(''), 'Everyone'],
+                  [() => setAssigned(null), 'Everyone'],
                   ...editors.map((e) => [() => setAssigned(e), e.username])
               ]}/>
 

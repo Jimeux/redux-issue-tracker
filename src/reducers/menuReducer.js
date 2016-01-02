@@ -1,4 +1,5 @@
 import { OPEN_MENU, CLOSE_MENU } from 'actions/menuActions'
+import { RESET } from 'store/store'
 
 const initialState = {
   open: false
@@ -13,6 +14,9 @@ export default function menu(state = initialState, action) {
 
     case CLOSE_MENU:
       return { openFalse: true }
+
+    case RESET:
+      return initialState
 
     default:
       return state

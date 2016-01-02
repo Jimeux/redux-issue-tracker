@@ -1,4 +1,5 @@
 import { SET_ALERT, CLEAR_ALERT } from 'actions/alertActions'
+import { RESET } from 'store/store'
 
 export default function alerts(state = null, action) {
 
@@ -8,6 +9,9 @@ export default function alerts(state = null, action) {
       return action.message
 
     case CLEAR_ALERT:
+      return null
+
+    case RESET:
       return null
 
     default:

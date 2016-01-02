@@ -4,6 +4,7 @@
 .issue-table {
   max-width: 730px;
   min-width: 730px;
+  table-layout:fixed;
 
   input { outline:none; }
 
@@ -36,19 +37,11 @@
     border-top: 1px solid $colorGrey200;
   }
   td {
-    white-space: nowrap;
+    //white-space: nowrap;
     vertical-align: top;
     font-weight: 300;
   }
-  tbody tr {
-    transition: all .3s ease;
-  }
 
-  tbody tr:hover {
-    cursor: pointer;
-    background: $colorGrey50;
-    color: $colorGrey800;
-  }
 
   .checkbox-cell {
     width: 50px;

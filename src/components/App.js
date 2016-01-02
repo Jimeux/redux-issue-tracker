@@ -9,16 +9,21 @@ import SnackBar from 'components/SnackBar'
 import * as AlertActionCreators from 'actions/alertActions'
 import * as MenuActionCreators from 'actions/menuActions'
 import * as AuthActionCreators from 'actions/authActions'
+import { setAssigned } from 'actions/filterActions'
 
 const App = React.createClass({
   render() {
-    const { alertState, menuState } = this.props
-    const { alertActions, menuActions, authActions } = this.props
+    const { alertState, menuState, authState } = this.props
+    const { alertActions, menuActions, authActions, setAssigned } = this.props
+    const user = {_id: authState.userId, username: authState.username}
+    const showMyIssues = () => setAssigned(user)
 
     return (
         <div className="app">
-          <Header {...menuActions}/>
-          <Menu {...menuState} {...menuActions} {...authActions}/>
+          <Header {...menuActions} loggedIn={!!authState.token}/>
+          {!authState.token ? null :
+              <Menu {...menuState} {...menuActions} {...authState} {...authActions}
+                  showMyIssues={showMyIssues}/>}
           {this.props.children}
           <SnackBar {...alertActions} alert={alertState}/>
         </div>
@@ -30,6 +35,7 @@ function mapPropsToState(state) {
   return {
     alertState: state.alert,
     menuState: state.menu,
+    authState: state.auth,
     routing: state.routing
   }
 }
@@ -38,7 +44,8 @@ function mapDispatchToProps(dispatch) {
   return {
     menuActions: bindActionCreators(MenuActionCreators, dispatch),
     alertActions: bindActionCreators(AlertActionCreators, dispatch),
-    authActions: bindActionCreators(AuthActionCreators, dispatch)
+    authActions: bindActionCreators(AuthActionCreators, dispatch),
+    setAssigned: (userId) => dispatch(setAssigned(userId))
   }
 }
 

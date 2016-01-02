@@ -1,14 +1,7 @@
 import React from 'react'
 import { Roles } from 'actions/authActions'
-import { Status } from 'actions/filterActions'
+import { Status, Types } from 'constants'//'shared/constants'
 import Util from 'util/util'
-
-const Types = { //TODO: Share with server code
-  CREATED: 'created',
-  COMMENTED: 'commented',
-  ASSIGNED_TO: 'assigned to',
-  CHANGED_STATUS: 'status changed to'
-}
 
 export default class ActivityList extends React.Component {
 
@@ -53,7 +46,6 @@ export default class ActivityList extends React.Component {
         <tr className={`activity-list-visible-${issue.showDetails}`}>
           <td colSpan={1}></td>
           <td colSpan={4}>
-            <div className="detail-title">{issue.title}</div>
             <ul className="items">
               {this.printActivities()}
             </ul>

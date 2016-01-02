@@ -11,17 +11,22 @@
   opacity: 1;
   display: table-row;
 
+  :hover {
+    background: white;
+    cursor: auto;
+  }
+
   .items {
     padding-left: 25px;
   }
 
-  .detail-title {
+  /*.detail-title {
     font-size: 17px;
     white-space: normal;
     font-weight: 400;
     margin-bottom: 20px;
   }
-
+*/
   .comment {
     border: 1px solid $colorGrey400;
     white-space: normal;
@@ -40,7 +45,7 @@
 
   td {
     overflow: scroll;
-    border: none;
+    //border: none;
     text-wrap: normal;
     padding: 10px 10px;
   }

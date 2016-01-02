@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Transition from 'react-addons-css-transition-group'
 
 export default class Menu extends React.Component {
   render() {
@@ -10,9 +10,10 @@ export default class Menu extends React.Component {
               I<small>SSUE</small> T<small>RACKER</small>
             </div>
             <div className="body">
-              <span className="user">Logged in as James</span>
+              <span className="user">Logged in as {this.props.username}</span>
               <ul>
-                <li>My Issues</li>
+                {!this.props.isEditor ? null :
+                    <li onClick={() => this.props.showMyIssues()}>My Issues</li>}
                 <li onClick={() => this.props.logout()}>Log out</li>
               </ul>
             </div>
@@ -21,9 +22,9 @@ export default class Menu extends React.Component {
     )
 
     return (
-        <ReactCSSTransitionGroup transitionName="menu" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+        <Transition transitionName="menu" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
           {this.props.open ? menu : null}
-        </ReactCSSTransitionGroup>
+        </Transition>
     )
   }
 }
