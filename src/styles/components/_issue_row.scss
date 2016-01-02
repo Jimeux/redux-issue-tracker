@@ -5,7 +5,7 @@
 
   //transition: all .3s ease;
 
-  :hover, .expanded {
+  tr:hover, .expanded {
     cursor: pointer;
     background: $colorGrey50;
     color: $colorGrey800;

@@ -41,7 +41,7 @@ class EditBar extends React.Component {
         <th colSpan={4} className="toolbar-cell">
           <ActiveMenu id="mark-as-menu" title="Mark As" values={[
                   [() => markAs(1), 'Resolved'],
-                  [() => markAs(0), 'Unresolved']
+                  [() => markAs(0), 'Open']
               ]}/>
 
           <ActiveMenu id="assignee-menu" title="Assign To" values={[
