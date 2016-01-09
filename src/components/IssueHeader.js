@@ -1,4 +1,5 @@
 import React from 'react'
+import {DropdownButton, MenuItem} from 'react-bootstrap'
 import SearchBox from 'components/SearchBox'
 import { Roles } from 'actions/authActions'
 import { Status } from 'constants'//'shared/constants'
@@ -86,17 +87,16 @@ class FilterBar extends React.Component {
 class ActiveMenu extends React.Component {
   render() {
     const { id, title, values } = this.props
-    const lis = values.map(v => {
-      return <li key={`li-${v[1]}`}><a onClick={v[0]}>{v[1]}</a></li>
+    const lis = values.map((v, i) => {
+      return <MenuItem key={`item-${v[1]}${i}`}
+                       eventKey={i}
+                       active={false}
+                       onClick={v[0]}>{v[1]}</MenuItem>
     })
     return (
-        <div className="dropdown">
-          <button id={id} className="btn btn-default dropdown-toggle" type="button"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {title} <span className="caret"/>
-          </button>
-          <ul className="dropdown-menu" aria-labelledby={id}>{lis}</ul>
-        </div>
+        <DropdownButton id={id} title={title}>
+          {lis}
+        </DropdownButton>
     )
   }
 }

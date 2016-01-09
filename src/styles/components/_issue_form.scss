@@ -1,9 +1,7 @@
 @import "../variables";
 @import "../palette";
 
-#modal-issue {
-  .issue-modal {
-    text-align: left;
-    max-width: 440px;
-  }
+.issue-modal .modal-dialog {
+  text-align: left;
+  max-width: 440px;
 }

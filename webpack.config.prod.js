@@ -9,8 +9,7 @@ const deps = [
   //'react-addons-css-transition-group/index.js',
   //'react-router/dist/react-router.min.js',
   'moment/min/moment.min.js',
-  'babel-polyfill/dist/polyfill.min.js',
-  'jquery/dist/jquery.min.js'
+  'babel-polyfill/dist/polyfill.min.js'
 ]
 
 const noParse = []

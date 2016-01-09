@@ -1,10 +1,11 @@
 import React from 'react'
+import {Modal} from 'react-bootstrap'
 import FormBase from 'components/FormBase'
 
 export default class IssueForm extends FormBase {
 
   render() {
-    const { submitting, values, errors, resetForm } = this.props
+    const { visible, submitting, values, errors, resetForm, setVisible } = this.props
     const hasErrors = errors.description || errors.title
     const strings = {
       titleClass: `form-group ${errors.title ? 'has-error' : ''}`,
@@ -13,84 +14,64 @@ export default class IssueForm extends FormBase {
     }
 
     return (
-        <div className="modal fade"
-             id="modal-issue"
-             tabIndex="-1"
-             role="dialog"
-             aria-labelledby="modalIssueLabel">
-          <div className="issue-modal modal-dialog" role="document">
-            <div className="modal-content">
+        <Modal show={visible} onHide={() => setVisible(false)} className="issue-modal">
 
-              <div className="modal-header">
-                <button type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 className="modal-title" id="modalIssueLabel">
-                  Create Issue
-                </h4>
-              </div>
+          <Modal.Header closeButton>
+            <Modal.Title>Create Issue</Modal.Title>
+          </Modal.Header>
 
-              <div className="modal-body">
+          <Modal.Body>
+            <div className={strings.titleClass}>
+              <label className="control-label">
+                Title
+                <span className="error">{errors.title}</span>
+              </label>
 
-                <div className={strings.titleClass}>
-                  <label className="control-label">
-                    Title
-                    <span className="error">{errors.title}</span>
-                  </label>
-
-                  <input value={values.title}
-                         onBlur={() => this.handleBlur('title')}
-                         onChange={() => this.handleChange('title')}
-                         type="text"
-                         className="form-control"
-                         ref="title"
-                         placeholder="Title"/>
-                </div>
-
-                <div className={strings.descriptionClass}>
-                  <label className="control-label">
-                    Description
-                    <span className="error">{errors.description}</span>
-                  </label>
-
-                  <textarea value={values.description}
-                            onBlur={() => this.handleBlur('description')}
-                            onChange={() => this.handleChange('description')}
-                            ref="description"
-                            rows={4}
-                            className="form-control"
-                            placeholder="Description"/>
-                </div>
-
-              </div>
-              <div className="modal-footer">
-                <button type="button"
-                        onClick={() => resetForm()}
-                        className="btn btn-default"
-                        data-dismiss="modal"
-                        disabled={submitting}>
-                  Close
-                </button>
-
-                <button ref="submit"
-                        onClick={(e) => this.handleSubmit(e)}
-
-                        type="submit"
-                        className="btn btn-primary">
-                  {strings.submitValue}
-                </button>
-              </div>
+              <input value={values.title}
+                     onBlur={() => this.handleBlur('title')}
+                     onChange={() => this.handleChange('title')}
+                     type="text"
+                     className="form-control"
+                     ref="title"
+                     placeholder="Title"/>
             </div>
-          </div>
-        </div>
+
+            <div className={strings.descriptionClass}>
+              <label className="control-label">
+                Description
+                <span className="error">{errors.description}</span>
+              </label>
+
+              <textarea value={values.description}
+                        onBlur={() => this.handleBlur('description')}
+                        onChange={() => this.handleChange('description')}
+                        ref="description"
+                        rows={4}
+                        className="form-control"
+                        placeholder="Description"/>
+            </div>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <button type="button"
+                    onClick={() => setVisible(false)}
+                    className="btn btn-default"
+                    disabled={submitting}>
+              Close
+            </button>
+
+            <button ref="submit"
+                    onClick={(e) => this.handleSubmit(e)}
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={submitting || hasErrors}>
+              {strings.submitValue}
+            </button>
+          </Modal.Footer>
+        </Modal>
     )
   }
 }
-
-//disabled={submitting || hasErrors}
 
 IssueForm.prototype.Validators = class {
   static title(value) {

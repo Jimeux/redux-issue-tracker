@@ -15,14 +15,6 @@ import LoginForm from 'components/LoginForm'
 
 import 'styles/core.scss'
 
-/*--- START Bootstrap imports ---*/
-import jQuery from 'jquery'  //TODO: Replace with dropdown and modal libraries
-global.$ = jQuery
-global.jQuery = jQuery
-require('vendor/bootstrap/dropdown')
-require('vendor/bootstrap/modal')
-/*--- END Bootstrap imports ---*/
-
 const history = createHistory()
 syncReduxAndRouter(history, store)
 

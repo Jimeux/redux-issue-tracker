@@ -1,9 +1,10 @@
 import {
-    UPDATE_VALUE, SUBMIT_FORM, SUBMISSION_COMPLETED, UPDATE_ERRORS, RESET_FORM
+    UPDATE_VALUE, SET_VISIBLE, SUBMIT_FORM, SUBMISSION_COMPLETED, UPDATE_ERRORS, RESET_FORM
 } from 'actions/issueFormActions'
 import { RESET } from 'store/store'
 
 const initialState = {
+  visible: false,
   values: {
     title: '',
     description: ''
@@ -18,6 +19,9 @@ const initialState = {
 export default function issueForm(state = initialState, action) {
 
   switch (action.type) {
+
+    case SET_VISIBLE:
+      return updateState({visible: action.visible})
 
     case UPDATE_VALUE:
       const newValue = {}
@@ -41,8 +45,6 @@ export default function issueForm(state = initialState, action) {
       return updateState({submitting: true})
 
     case SUBMISSION_COMPLETED:
-      if (action.successful)
-        $('#modal-issue').modal('hide')
       return initialState
 
     case RESET_FORM:

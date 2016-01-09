@@ -29,7 +29,7 @@ class IssuesRoute extends React.Component {
 
     const body = (
         <div>
-          <Fab />
+          <Fab onClick={() => issueFormActions.setVisible(true)}/>
           <IssueForm {...issueFormActions} {...issueFormState}/>
           <IssueTable {...issueTableProps} />
         </div>
