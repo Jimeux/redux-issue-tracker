@@ -44,7 +44,7 @@ export default class ActivityList extends React.Component {
     const { issue } = this.props
     return (
         <tr className={`activity-list-visible-${issue.showDetails}`}>
-          <td colSpan={1}></td>
+          <td colSpan={1}/>
           <td colSpan={4}>
             <ul className="items">
               {this.printActivities()}

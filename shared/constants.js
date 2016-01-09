@@ -7,6 +7,6 @@ module.exports.Types = {
 
 module.exports.Status = [
   'Open',
-  'Resolved',
-  'Inappropriate' //TODO
+  'Resolved'
+  //'Inappropriate' //TODO
 ]
