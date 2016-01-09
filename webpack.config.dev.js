@@ -26,8 +26,9 @@ module.exports = {
   context: __dirname,
 
   entry: [
+    'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/dev-server',
-    'webpack-hot-middleware/client',
+    //'webpack-hot-middleware/client',
     './src/entry'
   ],
 
